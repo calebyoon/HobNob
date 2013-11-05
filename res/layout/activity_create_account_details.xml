@@ -43,37 +43,20 @@
         android:ems="10" />
 
     <TextView
-        android:id="@+id/stateField"
+        android:id="@+id/addressField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/lastnameField"
-        android:layout_centerVertical="true"
-        android:text="State: " />
+        android:layout_below="@+id/lastnameField"
+        android:layout_marginTop="42dp"
+        android:text="Address:" />
 
     <EditText
-        android:id="@+id/cityText"
-        android:layout_width="175dp"
+        android:id="@+id/editText1"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/cityField"
-        android:layout_alignBottom="@+id/cityField"
-        android:layout_alignRight="@+id/lastnameText"
+        android:layout_alignBottom="@+id/addressField"
+        android:layout_toRightOf="@+id/firstnameField"
         android:ems="10" />
-
-    <EditText
-        android:id="@+id/stateText"
-        android:layout_width="175dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/cityText"
-        android:layout_centerVertical="true"
-        android:ems="10" />
-
-    <TextView
-        android:id="@+id/cityField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/stateText"
-        android:layout_alignLeft="@+id/stateField"
-        android:layout_marginBottom="16dp"
-        android:text="City:" />
 
 </RelativeLayout>
