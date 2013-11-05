@@ -1,0 +1,79 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".CreateAccountDetails" >
+
+    <TextView
+        android:id="@+id/lastnameField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/firstnameField"
+        android:layout_marginTop="41dp"
+        android:text="Last Name:" />
+
+    <TextView
+        android:id="@+id/firstnameField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="35dp"
+        android:text="First Name:" />
+
+    <EditText
+        android:id="@+id/firstnameText"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/firstnameField"
+        android:layout_alignBottom="@+id/firstnameField"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/lastnameText"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/lastnameField"
+        android:layout_alignLeft="@+id/firstnameText"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/stateField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lastnameField"
+        android:layout_centerVertical="true"
+        android:text="State: " />
+
+    <EditText
+        android:id="@+id/cityText"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/cityField"
+        android:layout_alignBottom="@+id/cityField"
+        android:layout_alignRight="@+id/lastnameText"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/stateText"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/cityText"
+        android:layout_centerVertical="true"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/cityField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/stateText"
+        android:layout_alignLeft="@+id/stateField"
+        android:layout_marginBottom="16dp"
+        android:text="City:" />
+
+</RelativeLayout>
