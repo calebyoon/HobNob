@@ -32,6 +32,10 @@
             android:name="com.example.hobnob.CreateAccountDetails"
             android:label="@string/title_activity_create_account_details" >
         </activity>
+        <activity
+            android:name="com.example.hobnob.EventCreationScreen"
+            android:label="@string/title_activity_event_creation_screen" >
+        </activity>
     </application>
 
 </manifest>

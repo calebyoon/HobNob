@@ -8,5 +8,12 @@
     <string name="checkButton">Check</string>
     <string name="title_activity_user_screen">UserScreen</string>
     <string name="title_activity_create_account_details">CreateAccountDetails</string>
+    <string name="title_activity_event_creation_screen">EventCreationScreen</string>
+    <string-array name="typeList">
+        <item>Social</item>
+        <item>Academic</item>
+        <item>Athletic</item>
+        <item>Balls</item>
+    </string-array>
 
 </resources>
