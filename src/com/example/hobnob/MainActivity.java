@@ -128,10 +128,11 @@ public class MainActivity extends Activity {
 						else {
 						      // We are now logged in
 							System.out.println("user created");
+						
 							
-							Firebase userFire = new Firebase("https://hobnob.firebaseio.com/users");
-							userFire.child(user.getUserId()+"/name/first").setValue("testFirst");
-							userFire.child(user.getUserId()+"/name/last").setValue("testLast");
+							Intent createUserIntent = new Intent(getApplicationContext(), CreateAccountDetails.class);
+							createUserIntent.putExtra("ID", user.getUserId());
+						    startActivity(createUserIntent);
 						}
 					}
 					});

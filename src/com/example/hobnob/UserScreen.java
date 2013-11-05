@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -18,7 +21,9 @@ public class UserScreen extends Activity {
 	private TextView welcomeUser_tx;
 	private String firstName;
 	private String lastName;
-
+	private Button createEvent_bt;
+	private String userID;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -26,7 +31,7 @@ public class UserScreen extends Activity {
 		
 		Intent i = getIntent();
         // Receiving the Data
-        String userID = i.getStringExtra("ID");
+        userID = i.getStringExtra("ID");
 		
 		Firebase root = new Firebase("https://hobnob.firebaseio.com/users/");
 		Firebase userRef = root.child(userID);
@@ -58,26 +63,21 @@ public class UserScreen extends Activity {
 		     }
 		 });
 		
-		userRef.addValueEventListener(new ValueEventListener() {
-		     @Override
-		     public void onDataChange(DataSnapshot snapshot) {
-		         Object value = snapshot.getValue();
-		         if (value == null) {
-		             System.out.println("User doesn't exist");
-		         } else {
-		        	 System.out.println((String)((Map)value).get("first"));
-		        	 System.out.println((String)((Map)value).get("last"));
-		         }
-		     }
-
-		     @Override
-		     public void onCancelled() {
-		         System.err.println("Listener was cancelled");
-		     }
-		 });
 		if(firstName != null) {
 	        System.out.println(firstName);
 		}
+		
+		createEvent_bt.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent createUserIntent = new Intent(getApplicationContext(), EventCreationScreen.class);
+				createUserIntent.putExtra("ID", userID);
+			    startActivity(createUserIntent);
+				
+			}
+		});
 
 	}
 

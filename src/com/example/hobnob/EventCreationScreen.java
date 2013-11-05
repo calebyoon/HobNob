@@ -4,6 +4,7 @@ import com.firebase.client.Firebase;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,12 +20,16 @@ public class EventCreationScreen extends Activity
   private Spinner eventType_s;
   private EditText eventTime_t;
   private EditText eventDate_t;
+  private String	userID;
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_event_creation_screen);
+    
+    Intent i = getIntent();
+    userID = i.getStringExtra("ID");
     
     final Firebase ref = new Firebase("https://hobnob.firebaseio.com");
 
@@ -40,6 +45,7 @@ public class EventCreationScreen extends Activity
       public void onClick(View v) {
         Firebase eventRef = new Firebase("https://hobnob.firebaseio.com/events");
         Firebase newRef = eventRef.push();
+        newRef.child("hostID/" + userID);
         newRef.child("name/" + eventName_t.toString());
         newRef.child("type/" + eventType_s.toString());
         newRef.child("date/" + eventDate_t.toString());
