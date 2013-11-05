@@ -8,57 +8,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".CreateAccountDetails" >
 
-    <TextView
-        android:id="@+id/lastnameField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/firstnameField"
-        android:layout_marginTop="41dp"
-        android:text="Last Name:" />
-
-    <TextView
-        android:id="@+id/firstnameField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="35dp"
-        android:text="First Name:" />
-
-    <EditText
-        android:id="@+id/firstnameText"
-        android:layout_width="175dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/firstnameField"
-        android:layout_alignBottom="@+id/firstnameField"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="15dp"
-        android:ems="10" />
-
-    <EditText
-        android:id="@+id/lastnameText"
-        android:layout_width="175dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/lastnameField"
-        android:layout_alignLeft="@+id/firstnameText"
-        android:ems="10" />
-
-    <TextView
-        android:id="@+id/addressField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/lastnameField"
-        android:layout_below="@+id/lastnameField"
-        android:layout_marginTop="42dp"
-        android:text="Address:" />
-
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/addressField"
-        android:layout_toRightOf="@+id/firstnameField"
-        android:ems="10" />
-
     <Button
         android:id="@+id/submitButton"
         android:layout_width="wrap_content"
@@ -67,5 +16,37 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="22dp"
         android:text="Submit" />
+
+    <EditText
+        android:id="@+id/firstnameText"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:hint="First Name"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/lastnameText"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/firstnameText"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/firstnameText"
+        android:layout_marginTop="20dp"
+        android:hint="Last Name"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/Address"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/lastnameText"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Address" />
 
 </RelativeLayout>

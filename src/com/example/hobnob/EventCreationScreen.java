@@ -45,11 +45,11 @@ public class EventCreationScreen extends Activity
       public void onClick(View v) {
         Firebase eventRef = new Firebase("https://hobnob.firebaseio.com/events");
         Firebase newRef = eventRef.push();
-        newRef.child("hostID/" + userID);
-        newRef.child("name/" + eventName_t.toString());
-        newRef.child("type/" + eventType_s.toString());
-        newRef.child("date/" + eventDate_t.toString());
-        newRef.child("time/" + eventTime_t.toString());
+        newRef.child("hostID").setValue(userID);
+        newRef.child("name").setValue(eventName_t.getText().toString());
+        newRef.child("type").setValue(eventType_s.getSelectedItem().toString());
+        newRef.child("date").setValue(eventDate_t.getText().toString());
+        newRef.child("time").setValue(eventTime_t.getText().toString());
       }
     });
     

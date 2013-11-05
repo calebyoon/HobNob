@@ -22,26 +22,39 @@
         android:id="@+id/createEventButton"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_alignLeft="@+id/welcomeUserText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/welcomeUserText"
         android:layout_marginTop="20dp"
         android:text="Create Event" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/viewEventsButton"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_alignLeft="@+id/createEventButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/createEventButton"
+        android:layout_marginTop="20dp"
+        android:text="View Events" />
+
+    <Button
+        android:id="@+id/chatButton"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/viewEventsButton"
         android:layout_marginTop="20dp"
         android:text="Chat" />
 
     <Button
-        android:id="@+id/button3"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_below="@+id/button2"
+        android:id="@+id/profileButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/chatButton"
         android:layout_marginTop="20dp"
         android:text="My Profile" />
 

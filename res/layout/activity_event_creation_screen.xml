@@ -8,133 +8,106 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".EventCreationScreen" >
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
-        android:text="Create an Event" />
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_marginRight="27dp"
-        android:text="Address" />
-
-    <TextView
-        android:id="@+id/eventNameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
-        android:layout_marginTop="18dp"
-        android:layout_toLeftOf="@+id/editText1"
-        android:text="Name" />
-
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignTop="@+id/textView1"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editText1"
-        android:layout_toLeftOf="@+id/editText1"
-        android:text="Type" />
-
-    <Spinner
-        android:id="@+id/eventTypeSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_alignTop="@+id/textView3"
-        android:layout_marginLeft="15dp"
-        android:entries="@array/typeList" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView3"
-        android:layout_marginTop="55dp"
-        android:text="Date" />
-
-    <EditText
-        android:id="@+id/eventDateText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/spinner1"
-        android:layout_alignTop="@+id/textView5"
-        android:ems="10"
-        android:inputType="date" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView5"
-        android:layout_centerVertical="true"
-        android:text="Time" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView5"
-        android:layout_below="@+id/textView6"
-        android:text="Address" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView5"
-        android:layout_below="@+id/textView7"
-        android:text="City" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView5"
-        android:layout_below="@+id/textView8"
-        android:text="State" />
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView5"
-        android:layout_below="@+id/textView9"
-        android:text="Description" />
-
-    <EditText
-        android:id="@+id/eventTimeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView7"
-        android:layout_alignBottom="@+id/textView7"
-        android:layout_alignLeft="@+id/editText2"
-        android:ems="10"
-        android:inputType="time" />
-
     <Button
         android:id="@+id/createEventButton"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView10"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="23dp"
         android:text="Create" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/editText1"
+        android:layout_toRightOf="@+id/eventDateText"
+        android:text="City" />
+
+    <EditText
+        android:id="@+id/eventNameText"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:ems="10"
+        android:hint="Name of Event" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/eventDateText"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/eventTimeText"
+        android:layout_alignBottom="@+id/eventTimeText"
+        android:layout_alignLeft="@+id/createEventButton"
+        android:layout_alignRight="@+id/eventNameText"
+        android:ems="10"
+        android:hint="Date"
+        android:inputType="date" />
+
+    <Spinner
+        android:id="@+id/eventTypeSpinner"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/eventNameText"
+        android:layout_below="@+id/eventNameText"
+        android:layout_marginTop="15dp"
+        android:entries="@array/typeList" />
+
+    <EditText
+        android:id="@+id/eventTimeText"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/eventTypeSpinner"
+        android:layout_below="@+id/eventTypeSpinner"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="Time"
+        android:inputType="time" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/Address"
+        android:layout_below="@+id/Address"
+        android:layout_toLeftOf="@+id/eventDateText"
+        android:ems="10"
+        android:hint="State" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/eventDateText"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/Address"
+        android:ems="10"
+        android:hint="City" />
+
+    <EditText
+        android:id="@+id/Address"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/eventTimeText"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/eventDateText"
+        android:ems="10"
+        android:hint="Address"
+        android:inputType="textPostalAddress" />
+
+    <EditText
+        android:id="@+id/descriptionText1"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText1"
+        android:layout_below="@+id/editText1"
+        android:ems="10"
+        android:hint="Event Description"
+        android:inputType="textMultiLine" />
 
 </RelativeLayout>

@@ -39,6 +39,7 @@ public class UserScreen extends Activity {
 		
 		
         welcomeUser_tx = (TextView)findViewById(R.id.welcomeUserText);
+        createEvent_bt = (Button)findViewById(R.id.createEventButton);
         
         nameRef.addValueEventListener(new ValueEventListener() {
 		     @Override
@@ -72,9 +73,9 @@ public class UserScreen extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent createUserIntent = new Intent(getApplicationContext(), EventCreationScreen.class);
-				createUserIntent.putExtra("ID", userID);
-			    startActivity(createUserIntent);
+				Intent intent = new Intent(getApplicationContext(), EventCreationScreen.class);
+				intent.putExtra("ID", userID);
+			    startActivity(intent);
 				
 			}
 		});
