@@ -21,7 +21,7 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editText1"
+        android:layout_alignBottom="@+id/friend"
         android:layout_toRightOf="@+id/eventDateText"
         android:text="City" />
 
@@ -32,6 +32,9 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:ems="10"
+        android:singleLine="true"
+    	android:lines="1"
+    	android:scrollHorizontally="true"
         android:hint="Name of Event" >
 
         <requestFocus />
@@ -47,6 +50,9 @@
         android:layout_alignRight="@+id/eventNameText"
         android:ems="10"
         android:hint="Date"
+        android:singleLine="true"
+    	android:lines="1"
+    	android:scrollHorizontally="true"
         android:inputType="date" />
 
     <Spinner
@@ -67,16 +73,22 @@
         android:layout_marginTop="15dp"
         android:ems="10"
         android:hint="Time"
+        android:singleLine="true"
+    	android:lines="1"
+    	android:scrollHorizontally="true"
         android:inputType="time" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/friend"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/Address"
         android:layout_below="@+id/Address"
         android:layout_toLeftOf="@+id/eventDateText"
         android:ems="10"
+        android:singleLine="true"
+    	android:lines="1"
+    	android:scrollHorizontally="true"
         android:hint="State" />
 
     <EditText
@@ -87,6 +99,9 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/Address"
         android:ems="10"
+        android:singleLine="true"
+    	android:lines="1"
+    	android:scrollHorizontally="true"
         android:hint="City" />
 
     <EditText
@@ -98,14 +113,18 @@
         android:layout_below="@+id/eventDateText"
         android:ems="10"
         android:hint="Address"
+        android:singleLine="true"
+    	android:lines="1"
+    	android:scrollHorizontally="true"
         android:inputType="textPostalAddress" />
 
     <EditText
         android:id="@+id/descriptionText1"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_below="@+id/editText1"
+        android:layout_above="@+id/createEventButton"
+        android:layout_alignLeft="@+id/friend"
+        android:layout_marginBottom="48dp"
         android:ems="10"
         android:hint="Event Description"
         android:inputType="textMultiLine" />

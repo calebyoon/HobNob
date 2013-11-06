@@ -128,8 +128,6 @@ public class MainActivity extends Activity {
 						else {
 						      // We are now logged in
 							System.out.println("user created");
-						
-							
 							Intent createUserIntent = new Intent(getApplicationContext(), CreateAccountDetails.class);
 							createUserIntent.putExtra("ID", user.getUserId());
 						    startActivity(createUserIntent);

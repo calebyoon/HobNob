@@ -23,6 +23,10 @@ public class UserScreen extends Activity {
 	private String lastName;
 	private Button createEvent_bt;
 	private String userID;
+	private Button addFriend_bt;
+	private Button viewEvents_bt;
+	private EditText friend_tx;
+	private String friend_id;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +38,16 @@ public class UserScreen extends Activity {
         userID = i.getStringExtra("ID");
 		
 		Firebase root = new Firebase("https://hobnob.firebaseio.com/users/");
-		Firebase userRef = root.child(userID);
+		final Firebase userRef = root.child(userID);
 		Firebase nameRef = userRef.child("name");
+		final Firebase friendRef = userRef.child("friends");
+		final Firebase newPushRef = friendRef.push();
 		
-		
+		friend_tx = (EditText)findViewById(R.id.friend);
+		addFriend_bt = (Button)findViewById(R.id.addFriend);
         welcomeUser_tx = (TextView)findViewById(R.id.welcomeUserText);
         createEvent_bt = (Button)findViewById(R.id.createEventButton);
+        viewEvents_bt = (Button)findViewById(R.id.viewEventsButton);
         
         nameRef.addValueEventListener(new ValueEventListener() {
 		     @Override
@@ -77,6 +85,25 @@ public class UserScreen extends Activity {
 				intent.putExtra("ID", userID);
 			    startActivity(intent);
 				
+			}
+		});
+		
+		viewEvents_bt.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), ListEvents.class);
+				intent.putExtra("ID", userID);
+				startActivity(intent);
+			}
+		});
+
+		addFriend_bt.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				friendRef.child(friend_tx.getText().toString()).setValue("security");
+				//newPushRef.setValue(friend_tx.getText().toString());
 			}
 		});
 

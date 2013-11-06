@@ -36,6 +36,10 @@
             android:name="com.example.hobnob.EventCreationScreen"
             android:label="@string/title_activity_event_creation_screen" >
         </activity>
+        <activity
+            android:name="com.example.hobnob.ListEvents"
+            android:label="@string/title_activity_list_events" >
+        </activity>
     </application>
 
 </manifest>

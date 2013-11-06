@@ -58,4 +58,26 @@
         android:layout_marginTop="20dp"
         android:text="My Profile" />
 
+    <EditText
+        android:id="@+id/friend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/profileButton"
+        android:hint="Add Friend ID"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/addFriend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/friend"
+        android:text="Add Friend" />
+
 </RelativeLayout>

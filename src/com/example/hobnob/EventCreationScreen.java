@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+
+
 public class EventCreationScreen extends Activity
 {
 
@@ -22,6 +24,7 @@ public class EventCreationScreen extends Activity
   private EditText eventDate_t;
   private String	userID;
   
+  
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -30,7 +33,6 @@ public class EventCreationScreen extends Activity
     
     Intent i = getIntent();
     userID = i.getStringExtra("ID");
-    
     final Firebase ref = new Firebase("https://hobnob.firebaseio.com");
 
     create_b = (Button)findViewById(R.id.createEventButton);
@@ -45,11 +47,10 @@ public class EventCreationScreen extends Activity
       public void onClick(View v) {
         Firebase eventRef = new Firebase("https://hobnob.firebaseio.com/events");
         Firebase newRef = eventRef.push();
-        newRef.child("hostID").setValue(userID);
-        newRef.child("name").setValue(eventName_t.getText().toString());
-        newRef.child("type").setValue(eventType_s.getSelectedItem().toString());
-        newRef.child("date").setValue(eventDate_t.getText().toString());
-        newRef.child("time").setValue(eventTime_t.getText().toString());
+        newRef.setValue(new Event(eventName_t.getText().toString(), eventTime_t.getText().toString(), eventDate_t.getText().toString(), eventType_s.getSelectedItem().toString(), userID));
+        Intent intent = new Intent(getApplicationContext(), UserScreen.class);
+	    intent.putExtra("ID", userID);
+	    startActivity(intent);
       }
     });
     
