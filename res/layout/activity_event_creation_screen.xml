@@ -21,7 +21,7 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/friend"
+        android:layout_alignBottom="@+id/eventStateText"
         android:layout_toRightOf="@+id/eventDateText"
         android:text="City" />
 
@@ -79,33 +79,33 @@
         android:inputType="time" />
 
     <EditText
-        android:id="@+id/friend"
+        android:id="@+id/eventStateText"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/Address"
-        android:layout_below="@+id/Address"
+        android:layout_alignLeft="@+id/EventAddressText"
+        android:layout_below="@+id/EventAddressText"
         android:layout_toLeftOf="@+id/eventDateText"
         android:ems="10"
-        android:singleLine="true"
-    	android:lines="1"
-    	android:scrollHorizontally="true"
-        android:hint="State" />
+        android:hint="State"
+        android:lines="1"
+        android:scrollHorizontally="true"
+        android:singleLine="true" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/EventCityText"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/eventDateText"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/Address"
+        android:layout_below="@+id/EventAddressText"
         android:ems="10"
-        android:singleLine="true"
-    	android:lines="1"
-    	android:scrollHorizontally="true"
-        android:hint="City" />
+        android:hint="City"
+        android:lines="1"
+        android:scrollHorizontally="true"
+        android:singleLine="true" />
 
     <EditText
-        android:id="@+id/Address"
+        android:id="@+id/EventAddressText"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/eventTimeText"
@@ -113,17 +113,17 @@
         android:layout_below="@+id/eventDateText"
         android:ems="10"
         android:hint="Address"
-        android:singleLine="true"
-    	android:lines="1"
-    	android:scrollHorizontally="true"
-        android:inputType="textPostalAddress" />
+        android:inputType="textPostalAddress"
+        android:lines="1"
+        android:scrollHorizontally="true"
+        android:singleLine="true" />
 
     <EditText
-        android:id="@+id/descriptionText1"
+        android:id="@+id/EventDescriptionText"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_above="@+id/createEventButton"
-        android:layout_alignLeft="@+id/friend"
+        android:layout_alignLeft="@+id/eventStateText"
         android:layout_marginBottom="48dp"
         android:ems="10"
         android:hint="Event Description"
