@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -56,22 +58,34 @@ public class ListEvents extends Activity {
 			}
 			
 			@Override
-			public void onChildAdded(DataSnapshot snapshot, String arg1) {
+			public void onChildAdded(final DataSnapshot snapshot, String arg1) {
 				// TODO Auto-generated method stub
-				Event event = snapshot.getValue(Event.class);
+				final Event event = snapshot.getValue(Event.class);
 				//check if it is your event. if so don't display
 				if(event.getEvent_host().equals(userID)) {
 					//do nothing. can display in another screen later if we want to
 				} else {
 					TextView temp = new TextView(getApplicationContext());
 					temp.setLayoutParams(lp);
-		            temp.setId(numOfEvents);
-		            temp.setTextSize(20);
-		            System.out.println(event.getEvent_name());
-		            temp.setText("Event: " + event.getEvent_name() + "\nBy: " + event.getEvent_host() + "\nTime: " + event.getEvent_time() + " on " + event.getEvent_date());
-		            temp.setPadding(0, 0, 0, 10);
-		            myLayout.addView(temp);
-		            numOfEvents++;
+          temp.setId(numOfEvents);
+          temp.setTextSize(20);
+          System.out.println(event.getEvent_name());
+          temp.setText("Event: " + event.getEvent_name() + "\nBy: " + event.getEvent_host() + "\nTime: " + event.getEvent_time() + " on " + event.getEvent_date());
+          temp.setPadding(0, 0, 0, 10);
+          myLayout.addView(temp);
+          numOfEvents++;
+          temp.setOnClickListener(new OnClickListener() {
+              @Override
+              public void onClick(View arg0)
+              {
+                Intent intent = new Intent(getApplicationContext(), EventScreen.class);
+                intent.putExtra("eventID", snapshot.getName());
+                intent.putExtra("userID", userID);
+                startActivity(intent);
+                System.out.println(snapshot.getName());
+              }
+          });
+		     
 				}
 			}
 			
@@ -81,6 +95,7 @@ public class ListEvents extends Activity {
 				
 			}
 		});
+		
 		
 	}
 

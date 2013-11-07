@@ -1,5 +1,8 @@
 package com.example.hobnob;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.firebase.client.Firebase;
 
 import android.os.Bundle;
@@ -22,6 +25,10 @@ public class EventCreationScreen extends Activity
   private Spinner eventType_s;
   private EditText eventTime_t;
   private EditText eventDate_t;
+  private EditText eventAddress_t;
+  private EditText eventCity_t;
+  private EditText eventState_t;
+  private EditText eventDescription_t;
   private String	userID;
   
   
@@ -40,6 +47,10 @@ public class EventCreationScreen extends Activity
     eventType_s = (Spinner)findViewById(R.id.eventTypeSpinner);
     eventTime_t = (EditText)findViewById(R.id.eventTimeText);
     eventDate_t = (EditText)findViewById(R.id.eventDateText);
+    eventAddress_t = (EditText)findViewById(R.id.EventAddressText);
+    eventCity_t = (EditText)findViewById(R.id.EventCityText);
+    eventState_t = (EditText)findViewById(R.id.eventStateText);
+    eventDescription_t = (EditText)findViewById(R.id.EventDescriptionText);
     
     create_b.setOnClickListener(new OnClickListener() {
       
@@ -47,10 +58,10 @@ public class EventCreationScreen extends Activity
       public void onClick(View v) {
         Firebase eventRef = new Firebase("https://hobnob.firebaseio.com/events");
         Firebase newRef = eventRef.push();
-        newRef.setValue(new Event(eventName_t.getText().toString(), eventTime_t.getText().toString(), eventDate_t.getText().toString(), eventType_s.getSelectedItem().toString(), userID));
+        newRef.setValue(new Event(eventName_t.getText().toString(), eventTime_t.getText().toString(), eventDate_t.getText().toString(), eventType_s.getSelectedItem().toString(), userID, eventAddress_t.getText().toString(), eventCity_t.getText().toString(), eventState_t.getText().toString(), eventDescription_t.getText().toString(), new HashMap<String, String>()));
         Intent intent = new Intent(getApplicationContext(), UserScreen.class);
-	    intent.putExtra("ID", userID);
-	    startActivity(intent);
+        intent.putExtra("ID", userID);
+        startActivity(intent);
       }
     });
     
