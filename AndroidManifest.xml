@@ -48,6 +48,14 @@
             android:name="com.example.hobnob.ChatRoom"
             android:label="@string/title_activity_chat_room" >
         </activity>
+        <activity
+            android:name="com.example.hobnob.EditUser"
+            android:label="@string/title_activity_edit_user"
+            android:parentActivityName="com.example.hobnob.UserScreen" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.hobnob.UserScreen" />
+        </activity>
     </application>
 
 </manifest>

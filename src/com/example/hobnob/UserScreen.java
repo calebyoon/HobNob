@@ -27,6 +27,7 @@ public class UserScreen extends Activity {
 	private Button viewEvents_bt;
 	private EditText friend_tx;
 	private String friend_id;
+	private Button myProfile_bt;
 	private Button chat_bt;
 	
 	@Override
@@ -50,6 +51,7 @@ public class UserScreen extends Activity {
         welcomeUser_tx = (TextView)findViewById(R.id.welcomeUserText);
         createEvent_bt = (Button)findViewById(R.id.createEventButton);
         viewEvents_bt = (Button)findViewById(R.id.viewEventsButton);
+        myProfile_bt = (Button)findViewById(R.id.profileButton);
         
         nameRef.addValueEventListener(new ValueEventListener() {
 		     @Override
@@ -100,6 +102,18 @@ public class UserScreen extends Activity {
 			}
 		});
 
+		myProfile_bt.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(getApplicationContext(), EditUser.class);
+				intent.putExtra("ID", userID);
+			    startActivity(intent);
+				
+			}
+		});
+		
 		addFriend_bt.setOnClickListener(new OnClickListener() {
 			
 			@Override

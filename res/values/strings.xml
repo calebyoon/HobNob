@@ -20,5 +20,6 @@
     <string name="title_activity_list_events">ListEvents</string>
     <string name="title_activity_friend_list">FriendList</string>
     <string name="title_activity_chat_room">ChatRoom</string>
+    <string name="title_activity_edit_user">EditUser</string>
 
 </resources>
