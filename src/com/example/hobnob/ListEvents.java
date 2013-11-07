@@ -82,15 +82,6 @@ public class ListEvents extends Activity {
 			}
 		});
 		
-	/*    snapshot.forEach(function(childSnapshot) {
-      	  // This code will be called twice.
-      	  var name = childSnapshot.name();
-      	  var childData = childSnapshot.val();
-      	  // name will be 'fred' the first time and 'wilma' the second time.
-      	  // childData will be the actual contents of the child.
-      });*/
-		
-		
 	}
 
 	@Override

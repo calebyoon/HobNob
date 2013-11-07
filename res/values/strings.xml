@@ -18,5 +18,7 @@
     </string-array>
 
     <string name="title_activity_list_events">ListEvents</string>
+    <string name="title_activity_friend_list">FriendList</string>
+    <string name="title_activity_chat_room">ChatRoom</string>
 
 </resources>

@@ -27,6 +27,7 @@ public class UserScreen extends Activity {
 	private Button viewEvents_bt;
 	private EditText friend_tx;
 	private String friend_id;
+	private Button chat_bt;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class UserScreen extends Activity {
 		final Firebase friendRef = userRef.child("friends");
 		final Firebase newPushRef = friendRef.push();
 		
+		chat_bt = (Button)findViewById(R.id.chatButton);
 		friend_tx = (EditText)findViewById(R.id.friend);
 		addFriend_bt = (Button)findViewById(R.id.addFriend);
         welcomeUser_tx = (TextView)findViewById(R.id.welcomeUserText);
@@ -102,8 +104,21 @@ public class UserScreen extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				friendRef.child(friend_tx.getText().toString()).setValue("security");
+				//friendRef.child(friend_tx.getText().toString() + "/chat/1").setValue("");
+				Firebase chatRef = friendRef.push();
+				friendRef.child(friend_tx.getText().toString() + "/chat").setValue(new Messages("0", "first message"));
 				//newPushRef.setValue(friend_tx.getText().toString());
+			}
+		});
+		
+		chat_bt.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(getApplicationContext(), FriendList.class);
+				intent.putExtra("ID", userID);
+				startActivity(intent);
 			}
 		});
 
