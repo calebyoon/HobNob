@@ -21,5 +21,6 @@
     <string name="title_activity_friend_list">FriendList</string>
     <string name="title_activity_chat_room">ChatRoom</string>
     <string name="title_activity_edit_user">EditUser</string>
+    <string name="title_activity_change_name">ChangeName</string>
 
 </resources>

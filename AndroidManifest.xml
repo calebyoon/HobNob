@@ -56,6 +56,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.hobnob.UserScreen" />
         </activity>
+        <activity
+            android:name="com.example.hobnob.ChangeName"
+            android:label="@string/title_activity_change_name"
+            android:parentActivityName="com.example.hobnob.EditUser" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.hobnob.EditUser" />
+        </activity>
     </application>
 
 </manifest>
