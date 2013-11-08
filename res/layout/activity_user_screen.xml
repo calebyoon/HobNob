@@ -8,76 +8,68 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".UserScreen" >
 
+    <Button
+        android:id="@+id/addFriend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/friend"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/friend"
+        android:layout_marginBottom="42dp"
+        android:text="Add Friend" />
+
+    <EditText
+        android:id="@+id/friend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/addFriend"
+        android:layout_marginLeft="26dp"
+        android:layout_marginRight="26dp"
+        android:ems="10"
+        android:hint="Add Friend ID" >
+
+        <requestFocus />
+    </EditText>
+
     <TextView
         android:id="@+id/welcomeUserText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="14dp"
-        android:layout_marginTop="16dp"
-        android:text="" />
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignLeft="@+id/createEventButton" />
 
     <Button
         android:id="@+id/createEventButton"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/chatButton"
         android:layout_below="@+id/welcomeUserText"
-        android:layout_marginTop="20dp"
-        android:text="Create Event" />
+        android:background="@drawable/create" />
 
     <Button
         android:id="@+id/viewEventsButton"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/createEventButton"
-        android:layout_marginTop="20dp"
-        android:text="View Events" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/createEventButton"
+        android:layout_alignBottom="@+id/createEventButton"
+        android:layout_alignLeft="@+id/profileButton"
+        android:background="@drawable/event_bt" />
 
     <Button
         android:id="@+id/chatButton"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/viewEventsButton"
-        android:layout_marginTop="20dp"
-        android:text="Chat" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/friend"
+        android:layout_alignLeft="@+id/friend"
+        android:background="@drawable/chat_pic" />
 
     <Button
         android:id="@+id/profileButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/chatButton"
-        android:layout_marginTop="20dp"
-        android:text="My Profile" />
-
-    <EditText
-        android:id="@+id/friend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/profileButton"
-        android:hint="Add Friend ID"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
-
-    <Button
-        android:id="@+id/addFriend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/friend"
-        android:text="Add Friend" />
+        android:layout_above="@+id/friend"
+        android:layout_alignRight="@+id/friend"
+        android:background="@drawable/my_profile" />
 
 </RelativeLayout>
