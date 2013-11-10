@@ -7,16 +7,18 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ChatRoom" >
-
-    <TextView
-        android:id="@+id/chatText"
-        android:layout_width="wrap_content"
-        android:layout_height="350dp"
-        android:layout_above="@+id/chatBox"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="" />
+        
+	    <TextView
+	        android:id="@+id/chatText"
+	        android:layout_width="wrap_content"
+	        android:layout_height="350dp"
+	        android:layout_above="@+id/chatBox"
+        	android:layout_alignParentLeft="true"
+        	android:layout_alignParentRight="true"
+        	android:maxLines="40"
+        	android:scrollbars="vertical"
+        	android:layout_alignParentTop="true"
+	        android:text="" />
 
     <Button
         android:id="@+id/submitButton1"

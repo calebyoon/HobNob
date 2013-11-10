@@ -71,5 +71,4 @@
         android:layout_above="@+id/friend"
         android:layout_alignRight="@+id/friend"
         android:background="@drawable/my_profile" />
-
 </RelativeLayout>

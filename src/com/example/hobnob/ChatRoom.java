@@ -11,6 +11,7 @@ import com.firebase.client.Query;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -49,6 +50,7 @@ public class ChatRoom extends Activity {
 		chatBox = (EditText)findViewById(R.id.chatBox);
 		chat = (TextView)findViewById(R.id.chatText);
 		chat.setTextSize(20);
+		chat.setMovementMethod(new ScrollingMovementMethod());
 		submit_bt = (Button)findViewById(R.id.submitButton1);
 	    
 		messageListQuery.addChildEventListener(new ChildEventListener() {
