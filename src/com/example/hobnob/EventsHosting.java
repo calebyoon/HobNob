@@ -28,7 +28,7 @@ public class EventsHosting extends Activity
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_events_hosting);
+   // setContentView(R.layout.activity_events_hosting);
     
     Intent i = getIntent();
     userID = i.getStringExtra("ID");
@@ -102,7 +102,7 @@ public class EventsHosting extends Activity
   public boolean onCreateOptionsMenu(Menu menu)
   {
     // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.events_hosting, menu);
+    //getMenuInflater().inflate(R.menu.events_hosting, menu);
     return true;
   }
 
