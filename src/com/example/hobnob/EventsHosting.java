@@ -32,6 +32,10 @@ public class EventsHosting extends Activity
     
     Intent i = getIntent();
     userID = i.getStringExtra("ID");
+    System.out.println(userID);
+    
+    numOfEvents = 0;
+    myLayout = (LinearLayout) findViewById(R.id.event_hosting_layout);
     
     numOfEvents = 0;
     myLayout = (LinearLayout) findViewById(R.id.event_layout);
