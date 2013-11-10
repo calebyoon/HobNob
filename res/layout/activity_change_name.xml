@@ -34,7 +34,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/firstName_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView1"
@@ -47,13 +47,22 @@
     </EditText>
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/lastName_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_below="@+id/editText1"
+        android:layout_alignLeft="@+id/firstName_edit"
+        android:layout_below="@+id/firstName_edit"
         android:layout_marginTop="27dp"
         android:ems="10"
         android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/cancel_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="57dp"
+        android:text="Cancel" />
 
 </RelativeLayout>

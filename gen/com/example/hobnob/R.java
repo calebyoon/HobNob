@@ -58,8 +58,6 @@ public final class R {
         public static final int createButton=0x7f09002f;
         public static final int createEventButton=0x7f090011;
         public static final int editName=0x7f09000d;
-        public static final int editText1=0x7f090004;
-        public static final int editText2=0x7f090005;
         public static final int emailAddress=0x7f09000e;
         public static final int eventAddress=0x7f090022;
         public static final int eventCityState=0x7f090023;
@@ -76,9 +74,11 @@ public final class R {
         public static final int event_attending_layout=0x7f090027;
         public static final int event_hosting_layout=0x7f090028;
         public static final int event_layout=0x7f09002a;
+        public static final int firstName_edit=0x7f090004;
         public static final int firstnameText=0x7f09000a;
         public static final int friend=0x7f090031;
         public static final int friend_layout=0x7f090029;
+        public static final int lastName_edit=0x7f090005;
         public static final int lastnameText=0x7f09000b;
         public static final int loginButton=0x7f09002d;
         public static final int name_change_but=0x7f090000;
