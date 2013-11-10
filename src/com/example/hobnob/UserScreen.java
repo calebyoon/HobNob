@@ -9,6 +9,7 @@ import com.firebase.client.ValueEventListener;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,7 +34,9 @@ public class UserScreen extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.activity_user_screen);
+
 		
 		Intent i = getIntent();
         // Receiving the Data
@@ -45,13 +48,13 @@ public class UserScreen extends Activity {
 		final Firebase friendRef = userRef.child("friends");
 		final Firebase newPushRef = friendRef.push();
 		
-		chat_bt = (Button)findViewById(R.id.chatButton);
-		friend_tx = (EditText)findViewById(R.id.friend);
 		addFriend_bt = (Button)findViewById(R.id.addFriend);
-        welcomeUser_tx = (TextView)findViewById(R.id.welcomeUserText);
-        createEvent_bt = (Button)findViewById(R.id.createEventButton);
-        viewEvents_bt = (Button)findViewById(R.id.viewEventsButton);
+		friend_tx = (EditText)findViewById(R.id.friend);
+		chat_bt = (Button)findViewById(R.id.chatButton);
         myProfile_bt = (Button)findViewById(R.id.profileButton);
+        viewEvents_bt = (Button)findViewById(R.id.viewEventsButton);
+        createEvent_bt = (Button)findViewById(R.id.createEventButton);
+        welcomeUser_tx = (TextView)findViewById(R.id.welcomeUserText);
         
         nameRef.addValueEventListener(new ValueEventListener() {
 		     @Override
@@ -96,6 +99,7 @@ public class UserScreen extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+				Log.i("viewEvents", "clicked");
 				Intent intent = new Intent(getApplicationContext(), ListEvents.class);
 				intent.putExtra("ID", userID);
 				startActivity(intent);
@@ -106,7 +110,7 @@ public class UserScreen extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				Log.i("profile", "clicked");
 				Intent intent = new Intent(getApplicationContext(), EditUser.class);
 				intent.putExtra("ID", userID);
 			    startActivity(intent);
