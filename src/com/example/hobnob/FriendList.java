@@ -1,8 +1,12 @@
 package com.example.hobnob;
 
+import java.util.Map;
+
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.ValueEventListener;
+import com.firebase.client.core.Context;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -21,19 +25,25 @@ public class FriendList extends Activity {
 	private LinearLayout myLayout;
 	private int numOfFriends;
 	private String[] Friends;
+	private HelperFunctions helper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_friend_list);
 		
+		helper = new HelperFunctions();
 		Intent i = getIntent();
 	    userID = i.getStringExtra("ID");
 	    numOfFriends = 0;
 	    Friends = new String[10];
+	    
 		
 		myLayout = (LinearLayout) findViewById(R.id.friend_layout);
-        final LayoutParams lp = new LayoutParams( LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
+        //final LayoutParams lp = new LayoutParams( LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
+        //lp.setMargins(10, 10, 10, 10);
+        //myLayout.requestLayout();
+        
         
 		Firebase friendRef = new Firebase("https://hobnob.firebaseio.com/users/" + userID + "/friends");
 		friendRef.addChildEventListener(new ChildEventListener() {
@@ -59,15 +69,48 @@ public class FriendList extends Activity {
 			@Override
 			public void onChildAdded(DataSnapshot snapshot, String arg1) {
 				// TODO Auto-generated method stub
+				LayoutParams lp = new LayoutParams( LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
+		        lp.setMargins(30, 30, 30, 30);
+		        
+		        myLayout.requestLayout();
+		        
+				android.content.Context context = getApplicationContext();
 	            numOfFriends++;
-				TextView temp = new TextView(getApplicationContext());
-				temp.setLayoutParams(lp);
+				final TextView temp = new TextView(getApplicationContext());
+				//temp.setLayoutParams(lp);
 	            temp.setId(numOfFriends);
-	            temp.setTextSize(20);
+	            temp.setTextSize(30);
+	            temp.setPadding(30, 30, 30, 30);
+	            temp.setBackgroundResource(R.drawable.back);
+	            //temp.setBackgroundDrawable(getResources().getDrawable(R.drawable.back));
 	            System.out.println(snapshot.getChildrenCount());
 	            System.out.println(snapshot.getName());
-	            temp.setText(snapshot.getName());
-	            temp.setPadding(0, 0, 0, 20);
+	            //System.out.println(HelperFunctions.convertToName(snapshot.getName()));
+	            final String friendID = snapshot.getName();
+	            //temp.setText(HelperFunctions.convertToName(snapshot.getName(), context));
+	            
+	            Firebase nameRef = new Firebase("https://hobnob.firebaseio.com/users/" + snapshot.getName() + "/name");
+	            nameRef.addValueEventListener(new ValueEventListener() {
+	   		     @Override
+	   		     public void onDataChange(DataSnapshot snapshot2) {
+	   		         Object value = snapshot2.getValue();
+	   		         if (value == null) {
+	   		             System.out.println("User doesn't exist");
+	   		         } else {
+	   		        	 System.out.println((String)((Map)value).get("first"));
+	   		        	 System.out.println((String)((Map)value).get("last"));
+
+	   		             temp.setText((String)((Map)value).get("first") + " " + (String)((Map)value).get("last"));
+
+	   		         }
+	   		     }
+
+	   		     @Override
+	   		     public void onCancelled() {
+	   		         System.err.println("Listener was cancelled");
+	   		     }
+	   		 });
+	            
 	            
 	            temp.setOnClickListener(new OnClickListener() {
 					
@@ -75,12 +118,13 @@ public class FriendList extends Activity {
 					public void onClick(View current) {
 						Intent intent = new Intent(getApplicationContext(), ChatRoom.class);
 						intent.putExtra("ID", userID);
-						intent.putExtra("Friend", ((TextView)current).getText().toString());
+						intent.putExtra("Friend", friendID);
 						startActivity(intent);
+						//((TextView)current).getText().toString()
 					}
 				});
 	            
-	            myLayout.addView(temp);
+	            myLayout.addView(temp, lp);
 			}
 			
 			@Override

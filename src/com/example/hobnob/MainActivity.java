@@ -36,13 +36,13 @@ public class MainActivity extends Activity {
 		
 		final Firebase ref = new Firebase("https://hobnob.firebaseio.com");
 
-		check_b = (Button)findViewById(R.id.checkButton);
+		//check_b = (Button)findViewById(R.id.checkButton);
 		login_b = (Button)findViewById(R.id.loginButton);
 		create_b = (Button)findViewById(R.id.createButton);
 		username_t = (EditText)findViewById(R.id.usernameText);
 		password_t = (EditText)findViewById(R.id.passwordText);
 		
-		check_b.setOnClickListener(new OnClickListener() {
+		/*check_b.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -72,7 +72,7 @@ public class MainActivity extends Activity {
 					});
 				
 			}
-		});
+		});*/
 		
 		login_b.setOnClickListener(new OnClickListener() {
 			
