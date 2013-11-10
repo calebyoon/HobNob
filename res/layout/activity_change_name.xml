@@ -9,28 +9,27 @@
     tools:context=".ChangeName" >
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/name_change_but"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="104dp"
-        android:text="Button" />
+        android:text="Submit" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/cancel_bt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/button1"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="50dp"
-        android:text="Button" />
+        android:text="Cancel" />
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/button1"
         android:text="Change Your Name"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
