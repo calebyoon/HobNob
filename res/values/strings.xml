@@ -23,5 +23,8 @@
     <string name="title_activity_edit_user">EditUser</string>
     <string name="title_activity_change_name">ChangeName</string>
     <string name="title_activity_event_screen">EventScreen</string>
+    <string name="title_activity_event_menu">EventMenu</string>
+    <string name="title_activity_events_hosting">EventsHosting</string>
+    <string name="title_activity_events_attending">EventsAttending</string>
 
 </resources>

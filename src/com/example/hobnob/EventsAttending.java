@@ -33,7 +33,7 @@ public class EventsAttending extends Activity
     userID = i.getStringExtra("ID");
   
   numOfEvents = 0;
-  myLayout = (LinearLayout) findViewById(R.id.event_layout);
+  myLayout = (LinearLayout) findViewById(R.id.event_attending_layout);
       final LayoutParams lp = new LayoutParams( LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
       
   Firebase listRef = new Firebase("https://hobnob.firebaseio.com/users/" + userID + "/event_list");
@@ -61,28 +61,66 @@ public class EventsAttending extends Activity
     @Override
     public void onChildAdded(final DataSnapshot snapshot, String arg1) {
       // TODO Auto-generated method stub
-      final Event event = snapshot.getValue(Event.class);
-      //check if it is your event. if so don't display
-    
-      TextView temp = new TextView(getApplicationContext());
-      temp.setLayoutParams(lp);
-      temp.setId(numOfEvents);
-      temp.setTextSize(20);
-      System.out.println(event.getEvent_name());
-      temp.setText("Event: " + event.getEvent_name() + "\nBy: " + event.getEvent_host() + "\nTime: " + event.getEvent_time() + " on " + event.getEvent_date());
-      temp.setPadding(0, 0, 0, 10);
-      myLayout.addView(temp);
-      numOfEvents++;
-      temp.setOnClickListener(new OnClickListener() {
-          @Override
-          public void onClick(View arg0)
-          {
-            Intent intent = new Intent(getApplicationContext(), EventScreen.class);
-            intent.putExtra("eventID", snapshot.getName());
-            intent.putExtra("userID", userID);
-            startActivity(intent);
-            System.out.println(snapshot.getName());
+      final String eventID = snapshot.getValue(String.class);
+      Firebase eventRef = new Firebase("https://hobnob.firebaseio.com/events");
+      eventRef.addChildEventListener(new ChildEventListener() {
+
+        @Override
+        public void onCancelled()
+        {
+          // TODO Auto-generated method stub
+          
+        }
+
+        @Override
+        public void onChildAdded(DataSnapshot eventSnapshot, String arg1)
+        {
+          final Event event = eventSnapshot.getValue(Event.class);
+          if(eventSnapshot.getName().equals(eventID)) {
+            TextView temp = new TextView(getApplicationContext());
+            temp.setLayoutParams(lp);
+            temp.setId(numOfEvents);
+            temp.setTextSize(20);
+            System.out.println(event.getEvent_name());
+            temp.setText("Event: " + event.getEvent_name() + "\nBy: " + event.getEvent_host() + "\nTime: " + event.getEvent_time() + " on " + event.getEvent_date());
+            temp.setPadding(0, 0, 0, 10);
+            myLayout.addView(temp);
+            numOfEvents++;
+            temp.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View arg0)
+                {
+                  Intent intent = new Intent(getApplicationContext(), EventScreen.class);
+                  intent.putExtra("eventID", snapshot.getName());
+                  intent.putExtra("userID", userID);
+                  startActivity(intent);
+                  System.out.println(snapshot.getName());
+                }
+            });
           }
+        }
+
+        @Override
+        public void onChildChanged(DataSnapshot arg0, String arg1)
+        {
+          // TODO Auto-generated method stub
+          
+        }
+
+        @Override
+        public void onChildMoved(DataSnapshot arg0, String arg1)
+        {
+          // TODO Auto-generated method stub
+          
+        }
+
+        @Override
+        public void onChildRemoved(DataSnapshot arg0)
+        {
+          // TODO Auto-generated method stub
+          
+        }
+        
       });
     }
     
