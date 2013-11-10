@@ -1,87 +1,4 @@
-<<<<<<< HEAD
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".UserScreen" >
 
-    <TextView
-        android:id="@+id/welcomeUserText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="14dp"
-        android:layout_marginTop="16dp"
-        android:text="" />
-
-    <Button
-        android:id="@+id/createEventButton"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/welcomeUserText"
-        android:layout_marginTop="20dp"
-        android:text="Create Event" />
-
-    <Button
-        android:id="@+id/viewEventsButton"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/createEventButton"
-        android:layout_marginTop="20dp"
-        android:text="View Events" />
-
-    <Button
-        android:id="@+id/chatButton"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/viewEventsButton"
-        android:layout_marginTop="20dp"
-        android:text="Chat" />
-
-    <Button
-        android:id="@+id/profileButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/chatButton"
-        android:layout_marginTop="20dp"
-        android:text="My Profile" />
-
-    <EditText
-        android:id="@+id/friend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/profileButton"
-        android:hint="Add Friend ID"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
-
-    <Button
-        android:id="@+id/addFriend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/friend"
-        android:text="Add Friend" />
-
-=======
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -155,6 +72,4 @@
         android:layout_above="@+id/friend"
         android:layout_alignRight="@+id/friend"
         android:background="@drawable/my_profile" />
-
->>>>>>> 6aa890fedb218b7583b9dee3392a4c59a585addf
 </RelativeLayout>
