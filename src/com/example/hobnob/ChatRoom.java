@@ -23,6 +23,8 @@ public class ChatRoom extends Activity {
 
 	private String userID;
 	private String friendID;
+	private String friendName;
+	private String myName;
 	private TextView chat;
 	private EditText chatBox;
 	private Button 	submit_bt;
@@ -35,6 +37,8 @@ public class ChatRoom extends Activity {
 		Intent i = getIntent();
 	    userID = i.getStringExtra("ID");
 	    friendID = i.getStringExtra("Friend");
+	    friendName = i.getStringExtra("FriendName");
+	    myName = i.getStringExtra("firstName");
 	    Firebase correctRef = new Firebase("https://hobnob.firebaseio.com/chat");
 	    Firebase checkRef;
 	    if(userID.compareTo(friendID) < 0) {
@@ -97,7 +101,7 @@ public class ChatRoom extends Activity {
 					//do nothing
 				} else {
 					Firebase newMessageRef = chatRef.push();
-					newMessageRef.setValue(new Messages(userID, chatBox.getText().toString()));
+					newMessageRef.setValue(new Messages(myName, chatBox.getText().toString()));
 				}
 			}
 		});

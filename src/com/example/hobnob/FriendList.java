@@ -24,6 +24,7 @@ public class FriendList extends Activity {
 	private String userID;
 	private LinearLayout myLayout;
 	private int numOfFriends;
+	private String myName;
 	private String[] Friends;
 	private HelperFunctions helper;
 
@@ -35,6 +36,7 @@ public class FriendList extends Activity {
 		helper = new HelperFunctions();
 		Intent i = getIntent();
 	    userID = i.getStringExtra("ID");
+	    myName = i.getStringExtra("firstName");
 	    numOfFriends = 0;
 	    Friends = new String[10];
 	    
@@ -87,6 +89,7 @@ public class FriendList extends Activity {
 	            System.out.println(snapshot.getName());
 	            //System.out.println(HelperFunctions.convertToName(snapshot.getName()));
 	            final String friendID = snapshot.getName();
+	            final String friendName;
 	            //temp.setText(HelperFunctions.convertToName(snapshot.getName(), context));
 	            
 	            Firebase nameRef = new Firebase("https://hobnob.firebaseio.com/users/" + snapshot.getName() + "/name");
@@ -119,6 +122,8 @@ public class FriendList extends Activity {
 						Intent intent = new Intent(getApplicationContext(), ChatRoom.class);
 						intent.putExtra("ID", userID);
 						intent.putExtra("Friend", friendID);
+						intent.putExtra("firstName", myName);
+						intent.putExtra("friendName", ((TextView)current).getText().toString());
 						startActivity(intent);
 						//((TextView)current).getText().toString()
 					}
