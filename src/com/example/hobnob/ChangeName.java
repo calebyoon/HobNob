@@ -1,19 +1,36 @@
 package com.example.hobnob;
 
-import com.firebase.client.Firebase;
+import java.util.Map;
 
-import android.os.Bundle;
-import android.app.Activity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.support.v4.app.NavUtils;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.ValueEventListener;
 
 public class ChangeName extends Activity {
 
 	private String userID;
+	private EditText firstName_t;
+	private EditText lastName_t;
+	private String firstName;
+	private String lastName;
+	
+	private Button submit;
+	private Button cancel;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -23,9 +40,57 @@ public class ChangeName extends Activity {
 		Firebase root = new Firebase("https://hobnob.firebaseio.com/users/");
 		Firebase userRef = root.child(userID);
 		Firebase nameRef = userRef.child("name");
+		final Firebase firstRef = nameRef.child("first");
+		final Firebase lastRef = nameRef.child("last");
 		setContentView(R.layout.activity_change_name);
-		// Show the Up button in the action bar.
-		setupActionBar();
+		
+		firstName_t = (EditText)findViewById(R.id.firstName_edit);
+		lastName_t = (EditText)findViewById(R.id.lastName_edit);
+		submit = (Button)findViewById(R.id.name_change_bt);
+		cancel = (Button)findViewById(R.id.cancel_bt);
+		
+		nameRef.addValueEventListener(new ValueEventListener()
+		{
+			@Override
+			public void onDataChange(DataSnapshot snapshot)
+			{
+				Object value = snapshot.getValue();
+				if (value == null) 
+				{
+					
+				}
+				else
+				{
+					firstName = (String)((Map)value).get("first");
+					lastName = (String)((Map)value).get("last");
+					firstName_t.setText(firstName);
+					lastName_t.setText(lastName);
+				}
+			}
+
+			@Override
+			public void onCancelled() {
+				Log.i("editUser", "listener was canceled");
+			}
+		});
+		
+		submit.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v){
+				firstRef.setValue(firstName_t.getText().toString());
+				lastRef.setValue(lastName_t.getText().toString());
+				finish();
+			}
+		});
+		cancel.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View arg0) {
+				finish();
+			}
+			
+		});
 	}
 
 	/**
