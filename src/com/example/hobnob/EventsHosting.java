@@ -36,9 +36,6 @@ public class EventsHosting extends Activity
     
     numOfEvents = 0;
     myLayout = (LinearLayout) findViewById(R.id.event_hosting_layout);
-    
-    numOfEvents = 0;
-    myLayout = (LinearLayout) findViewById(R.id.event_layout);
     final LayoutParams lp = new LayoutParams( LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
         
     Firebase listRef = new Firebase("https://hobnob.firebaseio.com/events");
