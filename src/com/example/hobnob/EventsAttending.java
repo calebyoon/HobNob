@@ -76,7 +76,7 @@ public class EventsAttending extends Activity
         @Override
         public void onChildAdded(final DataSnapshot eventSnapshot, String arg1)
         {
-        	LayoutParams lp = new LayoutParams( LayoutParams.MATCH_PARENT, 300, Gravity.CENTER_HORIZONTAL);
+        	LayoutParams lp = new LayoutParams( LayoutParams.MATCH_PARENT, 325, Gravity.CENTER_HORIZONTAL);
           final Event event = eventSnapshot.getValue(Event.class);
           if(eventSnapshot.getName().equals(eventID)) {
             Button temp = new Button(getApplicationContext());

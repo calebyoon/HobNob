@@ -61,7 +61,7 @@ public class ListEvents extends Activity {
 			@Override
 			public void onChildAdded(final DataSnapshot snapshot, String arg1) {
 				// TODO Auto-generated method stub
-	        	LayoutParams lp = new LayoutParams( LayoutParams.MATCH_PARENT, 300, Gravity.CENTER_HORIZONTAL);
+	        	LayoutParams lp = new LayoutParams( LayoutParams.MATCH_PARENT, 325, Gravity.CENTER_HORIZONTAL);
 
 				final Event event = snapshot.getValue(Event.class);
 				//check if it is your event. if so don't display

@@ -26,6 +26,7 @@ public class EventScreen extends Activity
   private TextView eventTime_t;
   private TextView eventAddress_t;
   private TextView eventCityState_t;
+  private TextView eventDescription_t;
   private Button attendEvent_b;
   private Button unattendEvent_b;
   private String eventID;
@@ -61,6 +62,7 @@ public class EventScreen extends Activity
     eventTime_t = (TextView) findViewById(R.id.eventTime);
     eventAddress_t = (TextView) findViewById(R.id.eventAddress);
     eventCityState_t = (TextView) findViewById(R.id.eventCityState);
+    eventDescription_t = (TextView) findViewById(R.id.eventDesView);
     attendEvent_b = (Button) findViewById(R.id.attendButton);
     unattendEvent_b = (Button) findViewById(R.id.unattendButton);
     
@@ -128,6 +130,7 @@ public class EventScreen extends Activity
               eventTime_t.setText("Time: " + (String)((Map)value).get("event_time"));
               eventAddress_t.setText((String)((Map)value).get("event_address"));
               eventCityState_t.setText( (String)((Map)value).get("event_city") + ", " + (String)((Map)value).get("event_state") );
+              eventDescription_t.setText((String)((Map)value).get("event_description"));
           }
       }
 

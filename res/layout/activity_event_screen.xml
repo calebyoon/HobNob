@@ -9,31 +9,12 @@
     tools:context=".EventScreen" >
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/eventType"
-        android:layout_marginTop="18dp"
-        android:text="TextView" />
-
-    <TextView
         android:id="@+id/eventName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/eventDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_below="@+id/textView2"
-        android:layout_marginTop="20dp"
-        android:text="TextView" />
 
     <TextView
         android:id="@+id/eventAddress"
@@ -50,17 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/eventAddress"
         android:layout_below="@+id/eventAddress"
-        android:layout_marginTop="23dp"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/eventTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/eventDate"
-        android:layout_alignBottom="@+id/eventDate"
-        android:layout_centerHorizontal="true"
-        android:text="TextView" />
+        android:layout_marginTop="23dp" />
 
     <TextView
         android:id="@+id/eventType"
@@ -68,17 +39,15 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/eventHost"
         android:layout_alignBottom="@+id/eventHost"
-        android:layout_alignLeft="@+id/eventTime"
-        android:text="TextView" />
+        android:layout_alignLeft="@+id/eventTime" />
 
     <TextView
         android:id="@+id/eventHost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignLeft="@+id/eventDesView"
         android:layout_below="@+id/eventName"
-        android:layout_marginTop="26dp"
-        android:text="TextView" />
+        android:layout_marginTop="26dp" />
 
     <Button
         android:id="@+id/unattendButton"
@@ -95,5 +64,28 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:text="Attend Event" />
+
+    <TextView
+        android:id="@+id/eventTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eventType"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp" />
+
+    <TextView
+        android:id="@+id/eventDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/eventTime"
+        android:layout_alignBottom="@+id/eventTime"
+        android:layout_alignLeft="@+id/eventHost" />
+
+    <TextView
+        android:id="@+id/eventDesView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true" />
 
 </RelativeLayout>
