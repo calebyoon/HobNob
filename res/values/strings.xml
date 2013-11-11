@@ -14,7 +14,6 @@
         <item>Social</item>
         <item>Academic</item>
         <item>Athletic</item>
-        <item>Balls</item>
     </string-array>
 
     <string name="title_activity_list_events">ListEvents</string>

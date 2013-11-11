@@ -24,9 +24,9 @@ public class UserScreen extends Activity {
 	private String lastName;
 	private Button createEvent_bt;
 	private String userID;
-	private Button addFriend_bt;
+	//private Button addFriend_bt;
 	private Button viewEvents_bt;
-	private EditText friend_tx;
+	//private EditText friend_tx;
 	private String friend_id;
 	private Button myProfile_bt;
 	private Button chat_bt;
@@ -48,8 +48,8 @@ public class UserScreen extends Activity {
 		final Firebase friendRef = userRef.child("friends");
 		final Firebase newPushRef = friendRef.push();
 		
-		addFriend_bt = (Button)findViewById(R.id.addFriend);
-		friend_tx = (EditText)findViewById(R.id.friend);
+		//addFriend_bt = (Button)findViewById(R.id.addFriend);
+		//friend_tx = (EditText)findViewById(R.id.friend);
 		chat_bt = (Button)findViewById(R.id.chatButton);
         myProfile_bt = (Button)findViewById(R.id.profileButton);
         viewEvents_bt = (Button)findViewById(R.id.viewEventsButton);
@@ -118,7 +118,7 @@ public class UserScreen extends Activity {
 			}
 		});
 		
-		addFriend_bt.setOnClickListener(new OnClickListener() {
+		/*addFriend_bt.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -127,7 +127,7 @@ public class UserScreen extends Activity {
 				friendRef.child(friend_tx.getText().toString() + "/chat").setValue(new Messages("0", "first message"));
 				//newPushRef.setValue(friend_tx.getText().toString());
 			}
-		});
+		});*/
 		
 		chat_bt.setOnClickListener(new OnClickListener() {
 			
