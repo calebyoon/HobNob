@@ -102,6 +102,7 @@ public class ChatRoom extends Activity {
 				} else {
 					Firebase newMessageRef = chatRef.push();
 					newMessageRef.setValue(new Messages(myName, chatBox.getText().toString()));
+					chatBox.setText("");
 				}
 			}
 		});

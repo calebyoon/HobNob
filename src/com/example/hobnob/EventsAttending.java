@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -34,7 +35,7 @@ public class EventsAttending extends Activity
   
   numOfEvents = 0;
   myLayout = (LinearLayout) findViewById(R.id.event_attending_layout);
-      final LayoutParams lp = new LayoutParams( LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
+      //final LayoutParams lp = new LayoutParams( LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
       
   Firebase listRef = new Firebase("https://hobnob.firebaseio.com/users/" + userID + "/event_list");
   
@@ -73,26 +74,31 @@ public class EventsAttending extends Activity
         }
 
         @Override
-        public void onChildAdded(DataSnapshot eventSnapshot, String arg1)
+        public void onChildAdded(final DataSnapshot eventSnapshot, String arg1)
         {
+        	LayoutParams lp = new LayoutParams( LayoutParams.MATCH_PARENT, 300, Gravity.CENTER_HORIZONTAL);
           final Event event = eventSnapshot.getValue(Event.class);
           if(eventSnapshot.getName().equals(eventID)) {
-            TextView temp = new TextView(getApplicationContext());
+            Button temp = new Button(getApplicationContext());
             temp.setLayoutParams(lp);
             temp.setId(numOfEvents);
             temp.setTextSize(20);
+            temp.setTextColor(0xff000000);
+            temp.setBackgroundResource(R.drawable.custom_button);
             System.out.println(event.getEvent_name());
             temp.setText("Event: " + event.getEvent_name() + "\nBy: " + event.getEvent_host() + "\nTime: " + event.getEvent_time() + " on " + event.getEvent_date());
-            temp.setPadding(0, 0, 0, 10);
-            myLayout.addView(temp);
+            //temp.setPadding(0, 0, 0, 10);
+            myLayout.addView(temp, lp);
             numOfEvents++;
             temp.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View arg0)
                 {
                   Intent intent = new Intent(getApplicationContext(), EventScreen.class);
-                  intent.putExtra("eventID", snapshot.getName());
+                  intent.putExtra("eventID", eventSnapshot.getName());
                   intent.putExtra("userID", userID);
+                  intent.putExtra("type", "attend");
+              	  finish();
                   startActivity(intent);
                   System.out.println(snapshot.getName());
                 }
@@ -118,7 +124,6 @@ public class EventsAttending extends Activity
         public void onChildRemoved(DataSnapshot arg0)
         {
           // TODO Auto-generated method stub
-          
         }
         
       });

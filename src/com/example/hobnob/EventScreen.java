@@ -2,6 +2,7 @@ package com.example.hobnob;
 
 import java.util.Map;
 
+import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.ValueEventListener;
@@ -26,9 +27,27 @@ public class EventScreen extends Activity
   private TextView eventAddress_t;
   private TextView eventCityState_t;
   private Button attendEvent_b;
+  private Button unattendEvent_b;
   private String eventID;
   private String userID;
+  private String eventListID;
+  private String type;
 
+  private void switchButtons(boolean showAttend) {
+    if(!showAttend) {
+      attendEvent_b.setVisibility(View.GONE);
+      unattendEvent_b.setVisibility(View.VISIBLE);
+    }
+    else {
+      attendEvent_b.setVisibility(View.VISIBLE);
+      unattendEvent_b.setVisibility(View.GONE);
+    }
+    if(type.equals("host")) {
+      attendEvent_b.setVisibility(View.GONE);
+      unattendEvent_b.setVisibility(View.GONE);
+    }
+  }
+  
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -43,15 +62,59 @@ public class EventScreen extends Activity
     eventAddress_t = (TextView) findViewById(R.id.eventAddress);
     eventCityState_t = (TextView) findViewById(R.id.eventCityState);
     attendEvent_b = (Button) findViewById(R.id.attendButton);
-
+    unattendEvent_b = (Button) findViewById(R.id.unattendButton);
+    
     Intent i = getIntent();
     eventID = i.getStringExtra("eventID");
     userID = i.getStringExtra("userID");
+    type = i.getStringExtra("type");
     
-    Firebase eventRoot = new Firebase("https://hobnob.firebaseio.com/events/");
-    Firebase userRoot = new Firebase("https://hobnob.firebaseio.com/users/");
+    final Firebase eventRoot = new Firebase("https://hobnob.firebaseio.com/events/");
+    final Firebase userRoot = new Firebase("https://hobnob.firebaseio.com/users/");
     final Firebase userRef = userRoot.child(userID);
     final Firebase eventRef = eventRoot.child(eventID);
+    
+    final Firebase listRef = new Firebase("https://hobnob.firebaseio.com/users/" + userID + "/event_list");
+    
+    switchButtons(true);
+    
+    listRef.addChildEventListener(new ChildEventListener() {
+      
+      @Override
+      public void onChildRemoved(DataSnapshot arg0) {
+        // TODO Auto-generated method stub
+        
+      }
+      
+      @Override
+      public void onChildMoved(DataSnapshot arg0, String arg1) {
+        // TODO Auto-generated method stub
+        
+      }
+      
+      @Override
+      public void onChildChanged(DataSnapshot snapshot, String arg1) {
+        // TODO Auto-generated method stub
+        
+      }
+      
+      @Override
+      public void onChildAdded(final DataSnapshot snapshot, String arg1) {
+        // TODO Auto-generated method stub
+        final String curEventID = snapshot.getValue(String.class);
+        if(curEventID.equals(eventID)) {
+          eventListID = snapshot.getName();
+          switchButtons(false);
+        }
+      }
+      
+      @Override
+      public void onCancelled() {
+        // TODO Auto-generated method stub
+        
+      }
+    });
+    
     eventRef.addValueEventListener(new ValueEventListener() {
       @Override
       public void onDataChange(DataSnapshot snapshot) {
@@ -82,6 +145,19 @@ public class EventScreen extends Activity
       {
           eventRef.child("attendees").push().setValue(userID);
           userRef.child("event_list").push().setValue(eventID);
+          finish();
+      }
+      
+    });
+    
+    unattendEvent_b.setOnClickListener(new OnClickListener() {
+
+      @Override
+      public void onClick(View arg0)
+      {
+        Firebase eventListRef = listRef.child(eventListID);
+        eventListRef.removeValue();
+        finish();
       }
       
     });
