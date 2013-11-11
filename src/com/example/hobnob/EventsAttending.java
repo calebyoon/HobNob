@@ -73,7 +73,7 @@ public class EventsAttending extends Activity
         }
 
         @Override
-        public void onChildAdded(DataSnapshot eventSnapshot, String arg1)
+        public void onChildAdded(final DataSnapshot eventSnapshot, String arg1)
         {
           final Event event = eventSnapshot.getValue(Event.class);
           if(eventSnapshot.getName().equals(eventID)) {
@@ -91,8 +91,9 @@ public class EventsAttending extends Activity
                 public void onClick(View arg0)
                 {
                   Intent intent = new Intent(getApplicationContext(), EventScreen.class);
-                  intent.putExtra("eventID", snapshot.getName());
+                  intent.putExtra("eventID", eventSnapshot.getName());
                   intent.putExtra("userID", userID);
+                  intent.putExtra("type", "attend");
                   startActivity(intent);
                   System.out.println(snapshot.getName());
                 }

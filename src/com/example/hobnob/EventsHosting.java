@@ -82,6 +82,7 @@ public class EventsHosting extends Activity
                 Intent intent = new Intent(getApplicationContext(), EventScreen.class);
                 intent.putExtra("eventID", snapshot.getName());
                 intent.putExtra("userID", userID);
+                intent.putExtra("type", "host");
                 startActivity(intent);
                 System.out.println(snapshot.getName());
               }
