@@ -145,15 +145,7 @@ public class EventScreen extends Activity
       {
           eventRef.child("attendees").push().setValue(userID);
           userRef.child("event_list").push().setValue(eventID);
-          Intent i = new Intent();
-          if(type.equals("local"))
-            i = new Intent(getApplicationContext(), ListEvents.class);
-          else if(type.equals("host"))
-            i = new Intent(getApplicationContext(), EventsHosting.class);
-          else if(type.equals("attend"))
-            i = new Intent(getApplicationContext(), EventsAttending.class);
-          i.putExtra("ID", userID);
-          startActivity(i);
+          finish();
       }
       
     });
@@ -165,15 +157,7 @@ public class EventScreen extends Activity
       {
         Firebase eventListRef = listRef.child(eventListID);
         eventListRef.removeValue();
-        Intent i = new Intent();
-        if(type.equals("local"))
-          i = new Intent(getApplicationContext(), ListEvents.class);
-        else if(type.equals("host"))
-          i = new Intent(getApplicationContext(), EventsHosting.class);
-        else if(type.equals("attend"))
-          i = new Intent(getApplicationContext(), EventsAttending.class);
-        i.putExtra("ID", userID);
-        startActivity(i);
+        finish();
       }
       
     });

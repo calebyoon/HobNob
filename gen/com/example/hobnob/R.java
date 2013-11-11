@@ -48,8 +48,7 @@ public final class R {
         public static final int ViewLocalEventsButton=0x7f09001d;
         public static final int action_settings=0x7f090036;
         public static final int addFriend=0x7f090030;
-        public static final int attendButton=0x7f090025;
-        public static final int button1=0x7f090002;
+        public static final int attendButton=0x7f090026;
         public static final int cancel_bt=0x7f090001;
         public static final int chatBox=0x7f090007;
         public static final int chatButton=0x7f090033;
@@ -63,7 +62,7 @@ public final class R {
         public static final int eventCityState=0x7f090023;
         public static final int eventDate=0x7f090021;
         public static final int eventDateText=0x7f090014;
-        public static final int eventHost=0x7f090026;
+        public static final int eventHost=0x7f090025;
         public static final int eventName=0x7f090020;
         public static final int eventNameText=0x7f090015;
         public static final int eventStateText=0x7f090013;
@@ -90,6 +89,7 @@ public final class R {
         public static final int textView1=0x7f090003;
         public static final int textView2=0x7f09001e;
         public static final int textView8=0x7f090012;
+        public static final int unattendButton=0x7f090002;
         public static final int usernameText=0x7f09002b;
         public static final int viewEventsButton=0x7f090034;
         public static final int welcomeUserText=0x7f090032;
