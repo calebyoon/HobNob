@@ -9,30 +9,31 @@
     tools:context=".EventMenu" >
 
     <Button
-        android:id="@+id/EventsAttendingButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/EventsHostingButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="46dp"
-        android:text="Events I&apos;m Attending" />
-
-    <Button
         android:id="@+id/ViewLocalEventsButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_alignLeft="@+id/EventsHostingButton"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="46dp"
+        android:background="@drawable/custom_button"
         android:text="View Local Events" />
 
     <Button
         android:id="@+id/EventsHostingButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
+        android:layout_alignLeft="@+id/EventsAttendingButton"
         android:layout_below="@+id/ViewLocalEventsButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="58dp"
+        android:background="@drawable/custom_button"
         android:text="Events I&apos;m Hosting" />
+
+    <Button
+        android:id="@+id/EventsAttendingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_below="@+id/EventsHostingButton"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/custom_button"
+        android:text="Events I&apos;m Attending" />
 
 </RelativeLayout>
