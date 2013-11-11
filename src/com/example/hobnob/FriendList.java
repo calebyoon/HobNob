@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -71,25 +72,26 @@ public class FriendList extends Activity {
 			@Override
 			public void onChildAdded(DataSnapshot snapshot, String arg1) {
 				// TODO Auto-generated method stub
-				LayoutParams lp = new LayoutParams( LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
-		        lp.setMargins(30, 30, 30, 30);
+				LayoutParams lp = new LayoutParams( LayoutParams.MATCH_PARENT, 200, Gravity.CENTER_HORIZONTAL);
+		        //lp.setMargins(30, 30, 30, 30);
 		        
 		        myLayout.requestLayout();
 		        
 				android.content.Context context = getApplicationContext();
 	            numOfFriends++;
-				final TextView temp = new TextView(getApplicationContext());
+				final Button temp = new Button(getApplicationContext());
 				//temp.setLayoutParams(lp);
 	            temp.setId(numOfFriends);
 	            temp.setTextSize(30);
-	            temp.setPadding(30, 30, 30, 30);
-	            temp.setBackgroundResource(R.drawable.back);
+	            temp.setTextColor(0xff000000);
+	            //temp.setPadding(30, 30, 30, 30);
+	            temp.setBackgroundResource(R.drawable.custom_button);
+	            
 	            //temp.setBackgroundDrawable(getResources().getDrawable(R.drawable.back));
 	            System.out.println(snapshot.getChildrenCount());
 	            System.out.println(snapshot.getName());
 	            //System.out.println(HelperFunctions.convertToName(snapshot.getName()));
 	            final String friendID = snapshot.getName();
-	            final String friendName;
 	            //temp.setText(HelperFunctions.convertToName(snapshot.getName(), context));
 	            
 	            Firebase nameRef = new Firebase("https://hobnob.firebaseio.com/users/" + snapshot.getName() + "/name");
