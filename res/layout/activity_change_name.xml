@@ -9,7 +9,7 @@
     tools:context=".ChangeName" >
 
     <Button
-        android:id="@+id/name_change_but"
+        android:id="@+id/name_change_bt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -21,8 +21,12 @@
         android:id="@+id/cancel_bt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:layout_alignLeft="@+id/unattendButton"
+=======
+>>>>>>> d998507d1ec58495b6db424f801dbd4b41b5480f
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="50dp"
         android:text="Cancel" />
 
@@ -55,14 +59,5 @@
         android:layout_marginTop="27dp"
         android:ems="10"
         android:inputType="textPersonName" />
-
-    <Button
-        android:id="@+id/cancel_bt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="57dp"
-        android:text="Cancel" />
 
 </RelativeLayout>

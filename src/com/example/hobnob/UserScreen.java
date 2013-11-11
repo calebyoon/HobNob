@@ -136,6 +136,7 @@ public class UserScreen extends Activity {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(getApplicationContext(), FriendList.class);
 				intent.putExtra("ID", userID);
+				intent.putExtra("firstName", firstName);
 				startActivity(intent);
 			}
 		});

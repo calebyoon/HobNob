@@ -29,6 +29,7 @@ public class ChangeName extends Activity {
 	private String lastName;
 	
 	private Button submit;
+	private Button cancel;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +40,14 @@ public class ChangeName extends Activity {
 		Firebase root = new Firebase("https://hobnob.firebaseio.com/users/");
 		Firebase userRef = root.child(userID);
 		Firebase nameRef = userRef.child("name");
+		final Firebase firstRef = nameRef.child("first");
+		final Firebase lastRef = nameRef.child("last");
 		setContentView(R.layout.activity_change_name);
 		
 		firstName_t = (EditText)findViewById(R.id.firstName_edit);
 		lastName_t = (EditText)findViewById(R.id.lastName_edit);
-		submit = (Button)findViewById(R.id.name_change_but);
+		submit = (Button)findViewById(R.id.name_change_bt);
+		cancel = (Button)findViewById(R.id.cancel_bt);
 		
 		nameRef.addValueEventListener(new ValueEventListener()
 		{
@@ -66,7 +70,6 @@ public class ChangeName extends Activity {
 
 			@Override
 			public void onCancelled() {
-				// TODO Auto-generated method stub
 				Log.i("editUser", "listener was canceled");
 			}
 		});
@@ -74,11 +77,18 @@ public class ChangeName extends Activity {
 		submit.setOnClickListener(new OnClickListener(){
 
 			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
+			public void onClick(View v){
+				firstRef.setValue(firstName_t.getText().toString());
+				lastRef.setValue(lastName_t.getText().toString());
+				finish();
 			}
-			
+		});
+		cancel.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View arg0) {
+				finish();
+			}
 			
 		});
 	}

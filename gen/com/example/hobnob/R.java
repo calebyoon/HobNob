@@ -24,20 +24,25 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int chat=0x7f020000;
-        public static final int chat_pic=0x7f020001;
-        public static final int create=0x7f020002;
-        public static final int create_event=0x7f020003;
-        public static final int event_bt=0x7f020004;
-        public static final int events=0x7f020005;
-        public static final int ic_launcher=0x7f020006;
-        public static final int icon=0x7f020007;
-        public static final int icon2=0x7f020008;
-        public static final int icon3=0x7f020009;
-        public static final int my_profile=0x7f02000a;
-        public static final int profile=0x7f02000b;
+        public static final int back=0x7f020000;
+        public static final int buttoncust=0x7f020001;
+        public static final int buttoncust_pressed=0x7f020002;
+        public static final int chat=0x7f020003;
+        public static final int chat_pic=0x7f020004;
+        public static final int create=0x7f020005;
+        public static final int create_event=0x7f020006;
+        public static final int custom_button=0x7f020007;
+        public static final int event_bt=0x7f020008;
+        public static final int events=0x7f020009;
+        public static final int ic_launcher=0x7f02000a;
+        public static final int icon=0x7f02000b;
+        public static final int icon2=0x7f02000c;
+        public static final int icon3=0x7f02000d;
+        public static final int my_profile=0x7f02000e;
+        public static final int profile=0x7f02000f;
     }
     public static final class id {
+<<<<<<< HEAD
         public static final int Address=0x7f09000c;
         public static final int EventAddressText=0x7f090018;
         public static final int EventCityText=0x7f090019;
@@ -93,6 +98,61 @@ public final class R {
         public static final int usernameText=0x7f09002b;
         public static final int viewEventsButton=0x7f090034;
         public static final int welcomeUserText=0x7f090032;
+=======
+        public static final int Address=0x7f09000b;
+        public static final int EventAddressText=0x7f090017;
+        public static final int EventCityText=0x7f090018;
+        public static final int EventDescriptionText=0x7f090019;
+        public static final int EventsAttendingButton=0x7f09001a;
+        public static final int EventsHostingButton=0x7f09001b;
+        public static final int Title=0x7f09000f;
+        public static final int ViewLocalEventsButton=0x7f09001c;
+        public static final int action_settings=0x7f090034;
+        public static final int addFriend=0x7f09002e;
+        public static final int attendButton=0x7f090024;
+        public static final int cancel_bt=0x7f090001;
+        public static final int chatBox=0x7f090006;
+        public static final int chatButton=0x7f090031;
+        public static final int chatText=0x7f090005;
+        public static final int createButton=0x7f09002a;
+        public static final int createEventButton=0x7f090010;
+        public static final int editName=0x7f09000c;
+        public static final int emailAddress=0x7f09000d;
+        public static final int eventAddress=0x7f090021;
+        public static final int eventCityState=0x7f090022;
+        public static final int eventDate=0x7f090020;
+        public static final int eventDateText=0x7f090013;
+        public static final int eventHost=0x7f090025;
+        public static final int eventName=0x7f09001f;
+        public static final int eventNameText=0x7f090014;
+        public static final int eventStateText=0x7f090012;
+        public static final int eventTime=0x7f090023;
+        public static final int eventTimeText=0x7f090015;
+        public static final int eventType=0x7f09001e;
+        public static final int eventTypeSpinner=0x7f090016;
+        public static final int event_attending_layout=0x7f090026;
+        public static final int event_hosting_layout=0x7f090027;
+        public static final int event_layout=0x7f090029;
+        public static final int firstName_edit=0x7f090003;
+        public static final int firstnameText=0x7f090009;
+        public static final int friend=0x7f09002f;
+        public static final int friend_layout=0x7f090028;
+        public static final int lastName_edit=0x7f090004;
+        public static final int lastnameText=0x7f09000a;
+        public static final int loginButton=0x7f09002b;
+        public static final int name_change_bt=0x7f090000;
+        public static final int password=0x7f09000e;
+        public static final int passwordText=0x7f09002c;
+        public static final int profileButton=0x7f090033;
+        public static final int submitButton=0x7f090008;
+        public static final int submitButton1=0x7f090007;
+        public static final int textView1=0x7f090002;
+        public static final int textView2=0x7f09001d;
+        public static final int textView8=0x7f090011;
+        public static final int usernameText=0x7f09002d;
+        public static final int viewEventsButton=0x7f090032;
+        public static final int welcomeUserText=0x7f090030;
+>>>>>>> d998507d1ec58495b6db424f801dbd4b41b5480f
     }
     public static final class layout {
         public static final int activity_change_name=0x7f030000;
