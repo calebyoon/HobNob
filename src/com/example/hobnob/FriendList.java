@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,6 +29,9 @@ public class FriendList extends Activity {
 	private String myName;
 	private String[] Friends;
 	private HelperFunctions helper;
+	private Button addFriend_bt;
+	private EditText friend_tx;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +45,16 @@ public class FriendList extends Activity {
 	    numOfFriends = 0;
 	    Friends = new String[10];
 	    
-		
+	    addFriend_bt = (Button)findViewById(R.id.addFriend);
+	  	friend_tx = (EditText)findViewById(R.id.friend);
 		myLayout = (LinearLayout) findViewById(R.id.friend_layout);
+		
         //final LayoutParams lp = new LayoutParams( LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
         //lp.setMargins(10, 10, 10, 10);
         //myLayout.requestLayout();
         
         
-		Firebase friendRef = new Firebase("https://hobnob.firebaseio.com/users/" + userID + "/friends");
+		final Firebase friendRef = new Firebase("https://hobnob.firebaseio.com/users/" + userID + "/friends");
 		friendRef.addChildEventListener(new ChildEventListener() {
 			
 			@Override
@@ -140,6 +146,17 @@ public class FriendList extends Activity {
 				
 			}
 		});
+		
+		addFriend_bt.setOnClickListener(new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			//friendRef.child(friend_tx.getText().toString() + "/chat/1").setValue("");
+			Firebase chatRef = friendRef.push();
+			friendRef.child(friend_tx.getText().toString() + "/chat").setValue(new Messages("0", "first message"));
+			//newPushRef.setValue(friend_tx.getText().toString());
+		}
+	});
 		
 	}
 
