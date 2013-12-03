@@ -36,13 +36,18 @@ public class EventScreen extends Activity
   private TextView eventDescription_t;
   private Button attendEvent_b;
   private Button unattendEvent_b;
+
+  private Button mapViewButton_b;
+
   private Button guestsAttending_b;
+
   private String eventID;
   private String userID;
   private String eventListID;
   private String type;
   private String arg1;
   private String arg2;
+  private String my_address;
   
   private String name;
   private String host;
@@ -86,11 +91,15 @@ public class EventScreen extends Activity
     eventDescription_t = (TextView) findViewById(R.id.eventDesView);
     attendEvent_b = (Button) findViewById(R.id.attendButton);
     unattendEvent_b = (Button) findViewById(R.id.unattendButton);
+
+    mapViewButton_b = (Button) findViewById(R.id.MapViewButton);
+
     guestsAttending_b = (Button) findViewById(R.id.guestsAttending_b);
     
     attendEvent_b.setVisibility(View.GONE);
     unattendEvent_b.setVisibility(View.GONE);
     guestsAttending_b.setVisibility(View.GONE);
+
     
     Intent i = getIntent();
     //OLD VERSION
@@ -140,6 +149,8 @@ public class EventScreen extends Activity
     	      //String location = events.getString("location");
     		  eventDate_t.setText(events.getString("date"));
     		  eventTime_t.setText(events.getString("time"));
+          my_address = events.getString("location");
+    		  eventAddress_t.setText(my_address);
     		  event_ID = events.getObjectId();
     		  
     		  ParseQuery<ParseObject> query2 = ParseQuery.getQuery("Attendees");
@@ -286,6 +297,22 @@ public class EventScreen extends Activity
 
 
         finish();
+      }
+      
+    });
+    
+    mapViewButton_b.setOnClickListener(new OnClickListener() {
+
+      @Override
+      public void onClick(View arg0)
+      {
+        Intent intent = new Intent(getApplicationContext(), MapScreen.class);
+        intent.putExtra("ID", userID);
+        String address = "";
+        intent.putExtra("address", my_address);
+        intent.putExtra("eventName", eventName_t.getText().toString());
+        startActivity(intent);
+        
       }
       
     });
