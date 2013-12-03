@@ -100,8 +100,7 @@ public class UserScreen extends Activity {
 			@Override
 			public void onClick(View v) {
 				Log.i("viewEvents", "clicked");
-				Intent intent = new Intent(getApplicationContext(), EventMenu.class);
-				intent.putExtra("ID", userID);
+				Intent intent = new Intent(getApplicationContext(), EventTabScreen.class);
 				startActivity(intent);
 			}
 		});

@@ -1,0 +1,36 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
+    
+     <item 
+        android:id="@+id/create_event_menu"
+        android:icon="@drawable/ic_action_new"
+    	android:showAsAction="ifRoom|withText"
+    	android:title="@string/new_event_action" />
+    
+     <item
+        android:id="@+id/overflow"
+        android:icon="@drawable/ic_action_overflow"
+        android:title="@string/settings_action"
+        android:showAsAction="always" 
+        
+        >
+     
+	    	<menu>
+	            
+	        <item
+	        android:id="@+id/action_settings"
+	        android:icon="@android:drawable/ic_menu_preferences"
+	        android:title="@string/action_settings"
+	        android:showAsAction="ifRoom" />
+	            
+	        <item
+	        android:id="@+id/action_logout"
+	        android:icon="@drawable/ic_action_warning"
+	        android:title="@string/logout_action"
+	        android:showAsAction="ifRoom" />
+	        
+	    	</menu>
+         
+     	</item>
+     	
+</menu>
