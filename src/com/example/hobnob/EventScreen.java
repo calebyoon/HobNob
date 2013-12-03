@@ -29,6 +29,7 @@ public class EventScreen extends Activity
   private TextView eventDescription_t;
   private Button attendEvent_b;
   private Button unattendEvent_b;
+  private Button mapViewButton_b;
   private String eventID;
   private String userID;
   private String eventListID;
@@ -65,6 +66,7 @@ public class EventScreen extends Activity
     eventDescription_t = (TextView) findViewById(R.id.eventDesView);
     attendEvent_b = (Button) findViewById(R.id.attendButton);
     unattendEvent_b = (Button) findViewById(R.id.unattendButton);
+    mapViewButton_b = (Button) findViewById(R.id.MapViewButton);
     
     Intent i = getIntent();
     eventID = i.getStringExtra("eventID");
@@ -161,6 +163,23 @@ public class EventScreen extends Activity
         Firebase eventListRef = listRef.child(eventListID);
         eventListRef.removeValue();
         finish();
+      }
+      
+    });
+    
+    mapViewButton_b.setOnClickListener(new OnClickListener() {
+
+      @Override
+      public void onClick(View arg0)
+      {
+        Intent intent = new Intent(getApplicationContext(), MapScreen.class);
+        intent.putExtra("ID", userID);
+        String address = "";
+        address += eventAddress_t.getText().toString() + ", " + eventCityState_t.getText().toString();
+        intent.putExtra("address", address);
+        intent.putExtra("eventName", eventName_t.getText().toString());
+        startActivity(intent);
+        
       }
       
     });

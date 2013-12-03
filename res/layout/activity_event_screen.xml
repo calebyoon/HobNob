@@ -88,4 +88,12 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true" />
 
+    <Button
+        android:id="@+id/MapViewButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/unattendButton"
+        android:layout_centerHorizontal="true"
+        android:text="View on Map" />
+
 </RelativeLayout>
