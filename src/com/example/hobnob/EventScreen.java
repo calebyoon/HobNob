@@ -47,6 +47,7 @@ public class EventScreen extends Activity
   private String type;
   private String arg1;
   private String arg2;
+  private String my_address;
   
   private String name;
   private String host;
@@ -148,6 +149,8 @@ public class EventScreen extends Activity
     	      //String location = events.getString("location");
     		  eventDate_t.setText(events.getString("date"));
     		  eventTime_t.setText(events.getString("time"));
+          my_address = events.getString("location");
+    		  eventAddress_t.setText(my_address);
     		  event_ID = events.getObjectId();
     		  
     		  ParseQuery<ParseObject> query2 = ParseQuery.getQuery("Attendees");
@@ -306,8 +309,7 @@ public class EventScreen extends Activity
         Intent intent = new Intent(getApplicationContext(), MapScreen.class);
         intent.putExtra("ID", userID);
         String address = "";
-        address += eventAddress_t.getText().toString() + ", " + eventCityState_t.getText().toString();
-        intent.putExtra("address", address);
+        intent.putExtra("address", my_address);
         intent.putExtra("eventName", eventName_t.getText().toString());
         startActivity(intent);
         
