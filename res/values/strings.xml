@@ -25,5 +25,10 @@
     <string name="title_activity_event_menu">EventMenu</string>
     <string name="title_activity_events_hosting">EventsHosting</string>
     <string name="title_activity_events_attending">EventsAttending</string>
+    <string name="title_activity_event_tab_screen">EventTabScreen</string>
+    <string name="settings_action">Settings</string>
+    <string name="logout_action">Logout</string>
+    <string name="new_event_action">+</string>
+    <string name="title_activity_guests_attending">GuestsAttending</string>
 
 </resources>

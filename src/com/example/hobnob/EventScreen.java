@@ -1,11 +1,17 @@
 package com.example.hobnob;
 
+import java.util.List;
 import java.util.Map;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.ValueEventListener;
+import com.parse.FindCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -16,6 +22,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EventScreen extends Activity
 {
@@ -29,11 +36,26 @@ public class EventScreen extends Activity
   private TextView eventDescription_t;
   private Button attendEvent_b;
   private Button unattendEvent_b;
+
   private Button mapViewButton_b;
+
+  private Button guestsAttending_b;
+
   private String eventID;
   private String userID;
   private String eventListID;
   private String type;
+  private String arg1;
+  private String arg2;
+  
+  private String name;
+  private String host;
+  private String event_type;
+  private String date;
+  private String time;
+  private String event_ID;
+  private boolean attend;
+
 
   private void switchButtons(boolean showAttend) {
     if(!showAttend) {
@@ -55,6 +77,8 @@ public class EventScreen extends Activity
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_event_screen);
+    Parse.initialize(getApplicationContext(), "mI01KcelEuBnGZo5QdZeuCyEwODIVMjJkREDvraJ", "I91qxlmi6W7scygd1IQudVimpLdMBszZZkvpnzFW"); 
+
     
     eventName_t = (TextView) findViewById(R.id.eventName);
     eventHost_t = (TextView) findViewById(R.id.eventHost);
@@ -66,23 +90,96 @@ public class EventScreen extends Activity
     eventDescription_t = (TextView) findViewById(R.id.eventDesView);
     attendEvent_b = (Button) findViewById(R.id.attendButton);
     unattendEvent_b = (Button) findViewById(R.id.unattendButton);
+
     mapViewButton_b = (Button) findViewById(R.id.MapViewButton);
+
+    guestsAttending_b = (Button) findViewById(R.id.guestsAttending_b);
+    
+    attendEvent_b.setVisibility(View.GONE);
+    unattendEvent_b.setVisibility(View.GONE);
+    guestsAttending_b.setVisibility(View.GONE);
+
     
     Intent i = getIntent();
-    eventID = i.getStringExtra("eventID");
+    //OLD VERSION
+    /*eventID = i.getStringExtra("eventID");
     userID = i.getStringExtra("userID");
-    type = i.getStringExtra("type");
+    type = i.getStringExtra("type");*/
+    ///new intent extra
+    type = "local";
+    arg1 = i.getStringExtra("arg1");
+    arg2 = i.getStringExtra("arg2");
+    System.out.println("!" + arg1 + "!");
+    System.out.println("!" + arg2 + "!");
+    attend = true;
     
-    final Firebase eventRoot = new Firebase("https://hobnob.firebaseio.com/events/");
+    ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
+    query.whereEqualTo("name", arg1);
+    query.whereEqualTo("host", arg2);
+    
+    //OLD VERSION
+    /*final Firebase eventRoot = new Firebase("https://hobnob.firebaseio.com/events/");
     final Firebase userRoot = new Firebase("https://hobnob.firebaseio.com/users/");
     final Firebase userRef = userRoot.child(userID);
     final Firebase eventRef = eventRoot.child(eventID);
     
-    final Firebase listRef = new Firebase("https://hobnob.firebaseio.com/users/" + userID + "/event_list");
+    final Firebase listRef = new Firebase("https://hobnob.firebaseio.com/users/" + userID + "/event_list");*/
     
-    switchButtons(true);
+ 
     
-    listRef.addChildEventListener(new ChildEventListener() {
+    query.findInBackground(new FindCallback<ParseObject>() {
+    	  public void done(List<ParseObject> eventList, ParseException e) {
+    	    // commentList now contains the last ten comments, and the "post"
+    	    // field has been populated. For example:
+    		  System.out.println("in function");
+    	    for (ParseObject events : eventList) {
+      		  System.out.println("in event");
+
+    	      // This does not require a network access.
+	          Toast.makeText(getApplicationContext(),events.getString("host"), Toast.LENGTH_LONG).show();
+
+	          System.out.println("host " + events.getString("host"));
+
+    	      eventName_t.setText(events.getString("name"));
+    		  eventType_t.setText(events.getString("type"));
+    		  //host = events.getString("host");
+    		  eventHost_t.setText(events.getString("host"));
+
+    	      //String location = events.getString("location");
+    		  eventDate_t.setText(events.getString("date"));
+    		  eventTime_t.setText(events.getString("time"));
+    		  event_ID = events.getObjectId();
+    		  
+    		  ParseQuery<ParseObject> query2 = ParseQuery.getQuery("Attendees");
+    		  query2.whereEqualTo("eventID", event_ID);
+    		  query2.whereEqualTo("AttendeeID", "14"); //use user id here later
+    		  query2.findInBackground(new FindCallback<ParseObject>() {
+    		 	  public void done(List<ParseObject> attendeeList, ParseException e) {
+    		 	    for (ParseObject attendee : attendeeList) {
+    			        Toast.makeText(getApplicationContext(), "inside", Toast.LENGTH_LONG).show();
+    		 	    	attend = false;
+    		 	    }
+    		 	    switchButtons(attend);
+    		 	   guestsAttending_b.setVisibility(View.VISIBLE);
+
+    		 	  }
+    		 	});
+    	      //listAdapter.add(name + "\n" + type + "\n" + host + "\n" + location + "\n" + date + "\n" + time);
+    	    }
+    	  }
+    	});
+    System.out.println("host is " + host);
+    eventName_t.setText(name);
+    eventHost_t.setText(host);
+    
+   Toast.makeText(getApplicationContext(), event_ID, Toast.LENGTH_LONG).show();
+
+   
+
+    
+    
+    //OLD VERSION
+    /*listRef.addChildEventListener(new ChildEventListener() {
       
       @Override
       public void onChildRemoved(DataSnapshot arg0) {
@@ -141,27 +238,61 @@ public class EventScreen extends Activity
       {
         // TODO Auto-generated method stub
         
-      }});
+      }});*/
     
     attendEvent_b.setOnClickListener(new OnClickListener() {
 
       @Override
       public void onClick(View arg0)
       {
-          eventRef.child("attendees").push().setValue(userID);
-          userRef.child("event_list").push().setValue(eventID);
+          //eventRef.child("attendees").push().setValue(userID);
+          //userRef.child("event_list").push().setValue(eventID);
+    	  ParseObject attendee = new ParseObject("Attendees");
+    	  attendee.put("eventID", event_ID);
+    	  //use user id here
+    	  attendee.put("AttendeeID", "14");
+    	  attendee.saveInBackground();
+    	  
           finish();
       }
       
     });
+    
+    guestsAttending_b.setOnClickListener(new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			//intent
+			Intent intent = new Intent(getApplicationContext(), GuestsAttending.class);
+            intent.putExtra("eventID", event_ID);
+            startActivity(intent);
+		}
+	});
     
     unattendEvent_b.setOnClickListener(new OnClickListener() {
 
       @Override
       public void onClick(View arg0)
       {
-        Firebase eventListRef = listRef.child(eventListID);
-        eventListRef.removeValue();
+        //Firebase eventListRef = listRef.child(eventListID);
+        //eventListRef.removeValue();
+          ParseQuery<ParseObject> query = ParseQuery.getQuery("Attendees");
+	      query.whereEqualTo("eventID", event_ID);
+	      query.whereEqualTo("AttendeeID", "14");
+	      
+	      query.findInBackground(new FindCallback<ParseObject>() {
+	      	  public void done(List<ParseObject> attendeeList, ParseException e) {
+	      	    // commentList now contains the last ten comments, and the "post"
+	      	    // field has been populated. For example:
+	      	    for (ParseObject attendee : attendeeList) {
+	      	      // This does not require a network access.
+	      	    	attendee.deleteInBackground();
+	      	    }
+	      	  }
+	      	});
+
+
+
         finish();
       }
       

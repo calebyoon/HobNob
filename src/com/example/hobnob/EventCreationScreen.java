@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.firebase.client.Firebase;
+import com.parse.ParseObject;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -14,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 
@@ -56,12 +58,28 @@ public class EventCreationScreen extends Activity
       
       @Override
       public void onClick(View v) {
-        Firebase eventRef = new Firebase("https://hobnob.firebaseio.com/events");
+        /*Firebase eventRef = new Firebase("https://hobnob.firebaseio.com/events");
         Firebase newRef = eventRef.push();
         newRef.setValue(new Event(eventName_t.getText().toString(), eventTime_t.getText().toString(), eventDate_t.getText().toString(), eventType_s.getSelectedItem().toString(), userID, eventAddress_t.getText().toString(), eventCity_t.getText().toString(), eventState_t.getText().toString(), eventDescription_t.getText().toString(), new HashMap<String, String>()));
         Intent intent = new Intent(getApplicationContext(), UserScreen.class);
         intent.putExtra("ID", userID);
-        startActivity(intent);
+        startActivity(intent);*/
+      	//Toast.makeText(getApplicationContext(), "Didn't insert", Toast.LENGTH_LONG).show();
+
+    	if(eventName_t.getText().toString().equals("") || eventTime_t.getText().toString().equals("") || eventDate_t.getText().toString().equals("") || eventAddress_t.getText().toString().equals("") || eventCity_t.getText().toString().equals("") || eventState_t.getText().toString().equals("")) {
+        	Toast.makeText(getApplicationContext(), "One of the fields was not filled out", Toast.LENGTH_LONG).show();
+    	} else {
+    		ParseObject event = new ParseObject("Event");
+    		event.put("name", eventName_t.getText().toString());
+    		event.put("type", eventType_s.getSelectedItem().toString());
+    		event.put("location", eventAddress_t.getText().toString() + " " + eventCity_t.getText().toString() + " " + eventState_t.getText().toString());
+    		event.put("host", "TEST MAN");
+    		event.put("date", eventDate_t.getText().toString());
+    		event.put("time", eventTime_t.getText().toString());
+    		event.put("description", eventDescription_t.getText().toString());
+    		event.saveInBackground();
+    		finish();
+    	}
       }
     });
     
@@ -71,7 +89,6 @@ public class EventCreationScreen extends Activity
   @Override
   public boolean onCreateOptionsMenu(Menu menu)
   {
-    // Inflate the menu; this adds items to the action bar if it is present.
     getMenuInflater().inflate(R.menu.event_creation_screen, menu);
     return true;
   }
