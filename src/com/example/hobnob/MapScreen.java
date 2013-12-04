@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -34,6 +35,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import android.location.Geocoder;
 import android.location.Location;
@@ -52,8 +58,7 @@ public class MapScreen extends Activity
 
   GoogleMap map;
   MapController mapController;
-  String address;
-  String eventName;
+  String eventID;
   TextView distanceText;
   Location location;
   LocationManager locationManager;
@@ -68,34 +73,36 @@ public class MapScreen extends Activity
     distanceText = (TextView) findViewById(R.id.distance);
     
     Intent i = getIntent();
-    address = i.getStringExtra("address");
-    eventName = i.getStringExtra("eventName");
+    eventID = i.getStringExtra("eventID");
     map.setMyLocationEnabled(true);
     LatLng coords = new LatLng(Float.NaN, Float.NaN);
     locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
     location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-    if (location == null)
-      location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-    try
-    {
-      coords = new MapMarkerLoader().execute(address).get();
-    }
-    catch( InterruptedException e )
-    {
-      e.printStackTrace();
-    }
-    catch( ExecutionException e )
-    {
-      e.printStackTrace();
-    }
-    map.addMarker(new MarkerOptions().position(new LatLng(coords.latitude, coords.longitude)).title(eventName));
-    CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(coords, 16);
-    map.moveCamera(cu);
-    float [] results = new float[3];
-    Location.distanceBetween(location.getLatitude(), location.getLongitude(), coords.latitude, coords.longitude, results);
-    Float dist = new Float(results[0]);
-    dist = (float) (dist * 0.000621371);
-    distanceText.setText(dist.toString());
+    ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
+    System.out.println(eventID);
+    query.getInBackground(eventID, new GetCallback<ParseObject>() {
+      public void done(ParseObject event, ParseException e) {
+        if (e == null) {
+          double lat, lng;
+          lat = event.getDouble("lat");
+          lng = event.getDouble("lng");
+          LatLng coords = new LatLng(lat, lng);
+          String eventName = event.getString("name");
+          if (location == null)
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+          map.addMarker(new MarkerOptions().position(coords).title(eventName));
+          CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(coords, 16);
+          map.moveCamera(cu);
+          float [] results = new float[3];
+          Location.distanceBetween(location.getLatitude(), location.getLongitude(), coords.latitude, coords.longitude, results);
+          Float dist = Float.valueOf(results[0]);
+          dist = (float) (dist * 0.000621371);
+          distanceText.setText(dist.toString());
+        } else {
+          // something went wrong
+        }
+      }
+    });
   }
 
 

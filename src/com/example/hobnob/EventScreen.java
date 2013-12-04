@@ -41,7 +41,6 @@ public class EventScreen extends Activity
 
   private Button guestsAttending_b;
 
-  private String eventID;
   private String userID;
   private String eventListID;
   private String type;
@@ -308,9 +307,7 @@ public class EventScreen extends Activity
       {
         Intent intent = new Intent(getApplicationContext(), MapScreen.class);
         intent.putExtra("ID", userID);
-        String address = "";
-        intent.putExtra("address", my_address);
-        intent.putExtra("eventName", eventName_t.getText().toString());
+        intent.putExtra("eventID", event_ID);
         startActivity(intent);
         
       }

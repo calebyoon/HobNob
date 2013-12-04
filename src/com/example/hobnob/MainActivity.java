@@ -94,7 +94,7 @@ public class MainActivity extends Activity {
 					    else {
 							System.out.println("user logged int successfully");
 							System.out.println(user.getUserId());
-							Intent intent = new Intent(getApplicationContext(), UserScreen.class);
+							Intent intent = new Intent(getApplicationContext(), EventTabScreen.class);
 						    intent.putExtra("ID", user.getUserId());
 						    startActivity(intent);
 					      // We are now logged in

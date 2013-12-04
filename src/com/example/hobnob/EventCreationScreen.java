@@ -2,8 +2,10 @@ package com.example.hobnob;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import com.firebase.client.Firebase;
+import com.google.android.gms.maps.model.LatLng;
 import com.parse.ParseObject;
 
 import android.os.Bundle;
@@ -72,11 +74,27 @@ public class EventCreationScreen extends Activity
     		ParseObject event = new ParseObject("Event");
     		event.put("name", eventName_t.getText().toString());
     		event.put("type", eventType_s.getSelectedItem().toString());
-    		event.put("location", eventAddress_t.getText().toString() + " " + eventCity_t.getText().toString() + " " + eventState_t.getText().toString());
+    		String address = eventAddress_t.getText().toString() + " " + eventCity_t.getText().toString() + " " + eventState_t.getText().toString();
+    		event.put("location", address);
     		event.put("host", "TEST MAN");
     		event.put("date", eventDate_t.getText().toString());
     		event.put("time", eventTime_t.getText().toString());
     		event.put("description", eventDescription_t.getText().toString());
+    		LatLng coords = new LatLng(Float.NaN, Float.NaN);
+    		try
+        {
+          coords = new MapMarkerLoader().execute(address).get();
+        }
+        catch( InterruptedException e )
+        {
+          e.printStackTrace();
+        }
+        catch( ExecutionException e )
+        {
+          e.printStackTrace();
+        }
+    		event.put("lat", coords.latitude);
+    		event.put("lng", coords.longitude);
     		event.saveInBackground();
     		finish();
     	}
