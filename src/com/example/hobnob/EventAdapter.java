@@ -7,6 +7,7 @@ import com.google.android.gms.maps.model.LatLng;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,11 +45,13 @@ public class EventAdapter extends ArrayAdapter<Event>
       if(eventDistance_t != null) {
         LatLng coords = e.getEvent_coords();
         float [] results = new float[3];
-        Location.distanceBetween(location.getLatitude(), location.getLongitude(), coords.latitude, coords.longitude, results);
-        Double dist = Double.valueOf(results[0]);
-        dist = dist * 0.000621371;
-        dist = (double)Math.round(dist * 10) / 10;
-        eventDistance_t.setText(dist.toString() + " mi");
+        if (location != null){
+        	Location.distanceBetween(location.getLatitude(), location.getLongitude(), coords.latitude, coords.longitude, results);
+	        Double dist = Double.valueOf(results[0]);
+	        dist = dist * 0.000621371;
+	        dist = (double)Math.round(dist * 10) / 10;
+	        eventDistance_t.setText(dist.toString() + " mi");
+        }
       }
       if(eventImage_i != null) {
         if( e.getEvent_type().equals("Social")) {
