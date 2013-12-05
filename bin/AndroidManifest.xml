@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.hobnob"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="18" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon3"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:name=".MainApplication" >
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+		<activity
+		    android:name="com.facebook.LoginActivity"
+		    android:label="@string/login" >
+		</activity>
+        <activity
+            android:name="com.example.hobnob.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.hobnob.UserScreen"
+            android:label="@string/title_activity_user_screen" >
+        </activity>
+        <activity
+            android:name="com.example.hobnob.CreateAccountDetails"
+            android:label="@string/title_activity_create_account_details" >
+        </activity>
+        <activity
+            android:name="com.example.hobnob.EventCreationScreen"
+            android:label="@string/title_activity_event_creation_screen" >
+        </activity>
+        <activity
+            android:name="com.example.hobnob.EventScreen"
+            android:label="@string/title_activity_event_screen" >
+        </activity>
+        <activity
+            android:name="com.example.hobnob.ListEvents"
+            android:label="@string/title_activity_list_events" >
+        </activity>
+        <activity
+            android:name="com.example.hobnob.FriendList"
+            android:label="@string/title_activity_friend_list" >
+        </activity>
+        <activity
+            android:name="com.example.hobnob.ChatRoom"
+            android:label="@string/title_activity_chat_room" >
+        </activity>
+        <activity
+            android:name="com.example.hobnob.EditUser"
+            android:label="@string/title_activity_edit_user" >
+        </activity>
+        <activity
+            android:name="com.example.hobnob.ChangeName"
+            android:label="@string/title_activity_change_name" >
+        </activity>
+        <activity
+            android:name="com.example.hobnob.EventMenu"
+            android:label="@string/title_activity_event_menu" >
+        </activity>
+        <activity
+            android:name="com.example.hobnob.EventsHosting"
+            android:label="@string/title_activity_events_hosting" >
+        </activity>
+        <activity
+            android:name="com.example.hobnob.EventsAttending"
+            android:label="@string/title_activity_events_attending" >
+        </activity>
+        <activity
+            android:name="com.example.hobnob.GuestsAttending"
+            android:label="@string/title_activity_guests_attending" >
+        </activity>
+	   <activity
+            android:name="com.example.hobnob.EventTabScreen"
+            android:label="@string/title_activity_event_tab_screen" >
+        </activity>	
+        <activity
+            android:name="com.example.hobnob.MapScreen"
+            android:label="@string/title_activity_map_screen" >
+        </activity>
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCHxkBkkyql8e_Yj9fYFKRxxOp88He8bGE" />
+    </application>
+
+</manifest>

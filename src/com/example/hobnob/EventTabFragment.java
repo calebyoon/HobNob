@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.google.android.gms.maps.model.LatLng;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.Parse;
@@ -32,6 +33,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import android.app.Activity;
+import android.app.ListFragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.YuvImage;
@@ -72,26 +74,24 @@ public class EventTabFragment extends Fragment {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-	    Parse.initialize(getActivity(), "mI01KcelEuBnGZo5QdZeuCyEwODIVMjJkREDvraJ", "I91qxlmi6W7scygd1IQudVimpLdMBszZZkvpnzFW"); 
+	  Parse.initialize(getActivity(), "mI01KcelEuBnGZo5QdZeuCyEwODIVMjJkREDvraJ", "I91qxlmi6W7scygd1IQudVimpLdMBszZZkvpnzFW"); 
 
 		// Set up the listview
-        ArrayList<String> playerlist = new ArrayList<String>();
+    ArrayList<String> playerlist = new ArrayList<String>();
         // Create and populate an ArrayList of objects from parse
 		final FrameLayout frame = (FrameLayout) view.findViewById(R.layout.my_fragment);
-
-        final ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1);
-        final ListView list = (ListView)view.findViewById(R.id.list_layout);
-        list.setAdapter(listAdapter);
-		//final TextView text = new TextView(getActivity());
-		numOfEvents = 0;
-
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
-        ParseQuery<ParseObject> attendQuery = ParseQuery.getQuery("Attendees");
-
+    ArrayList<Event> m_event = new ArrayList<Event>();
+    final EventAdapter listAdapter = new EventAdapter(getActivity(), R.layout.event_list_item, m_event);
+    final ListView list = (ListView)view.findViewById(R.id.list_layout);
+    list.setAdapter(listAdapter);
+    numOfEvents = 0;
+    ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
+    ParseQuery<ParseObject> attendQuery = ParseQuery.getQuery("Attendees");
         
 		switch (getArguments().getInt(KEY_TYPE)) {
 		case TYPE_LOCAL:
 	        attendQuery.whereEqualTo("AttendeeID", "naugust");
+	        attendQuery.whereNotEqualTo("host", "TEST MAN");
 			break;
 		case TYPE_HOSTING:
 	        query.whereEqualTo("host", "TEST MAN");
@@ -118,11 +118,15 @@ public class EventTabFragment extends Fragment {
 					query2.getInBackground(event.getString("eventID"), new GetCallback<ParseObject>() {
 					  public void done(ParseObject object, ParseException e) {
 					    if (e == null) {
-					      // object will be your game score
 					    	String name = object.getString("name");
-				      	    String host = object.getString("host");
-				      	    String text = String.format("%s \nBy: " + host, name);
-				      	    listAdapter.add(text);
+					    	String id = object.getObjectId();
+					    	String time = object.getString("time");
+					    	String date = object.getString("date");
+					    	String type = object.getString("type");
+		      	    String host = object.getString("host");
+		      	    double lat = object.getDouble("lat");
+		      	    double lng = object.getDouble("lng");
+		      	    listAdapter.add(new Event(id, name, time, date, type, host, new LatLng(lat, lng)));
 					    } else {
 					      // something went wrong
 					    }
@@ -136,21 +140,16 @@ public class EventTabFragment extends Fragment {
 	      	  public void done(List<ParseObject> eventList, ParseException e) {
 	      	    // commentList now contains the last ten comments, and the "post"
 	      	    // field has been populated. For example:
-	      	    for (ParseObject events : eventList) {
-	      	      // This does not require a network access.
-	      	    	
-	      	      String name = events.getString("name");
-	      	      String type = events.getString("type");
-	      	      String host = events.getString("host");
-	      	      String location = events.getString("location");
-	      	      String date = events.getString("date");
-	      	      String time = events.getString("time");
-	      	      
-	      	      
-	      	      String text = String.format("%s \nBy: " + host, name);
-	      	      
-	      	      //listAdapter.add(name + "\n" + type + "\n" + host + "\n" + location + "\n" + date + "\n" + time);
-	      	      listAdapter.add(text);
+	      	    for (ParseObject event : eventList) {
+	      	      String name = event.getString("name");
+                String id = event.getObjectId();
+                String time = event.getString("time");
+                String date = event.getString("date");
+                String type = event.getString("type");
+                String host = event.getString("host");
+                double lat = event.getDouble("lat");
+                double lng = event.getDouble("lng");
+                listAdapter.add(new Event(id, name, time, date, type, host, new LatLng(lat, lng)));
 	      	      
 	      	    }
 	      	  }
@@ -162,30 +161,14 @@ public class EventTabFragment extends Fragment {
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
 					//TextView txt = (TextView) parent.getChildAt(position - list.getFirstVisiblePosition()).findViewById(android.R.layout.simple_list_item_1);
-		            //String keyword = txt.getText().toString();
-					// TODO Auto-generated method stub
-		            String value = (String)listAdapter.getItem(position); 
-		            String lines[] = value.split("[\n]");
-		            String line1 = lines[0];
-		            String line2 = lines[1];
-		            String lines2[] = lines[1].split(": ");
-		            String str = lines2[1];
-
-		            //check if location, host, party name, or date is selected to sort by. Change query based
-		            //on what is selected. only using host now. CHECK based on sort given through intent below
-		            //which goes to event screen
-		            
-			        Intent intent = new Intent(getActivity(), EventScreen.class);
-			        line1 = line1.trim();
-			        str = str.trim();
-			        
-	                intent.putExtra("arg1", line1);
-	                intent.putExtra("arg2", str);
-	                intent.putExtra("sort", "name");
-	                startActivity(intent);
-			        
-		        	Toast.makeText(getActivity(), "1: " + line1 + " 2: " + str, Toast.LENGTH_LONG).show();
-		        	
+          //String keyword = txt.getText().toString();
+          Event value = (Event)listAdapter.getItem(position); 
+	        Intent intent = new Intent(getActivity(), EventScreen.class);
+      
+          intent.putExtra("arg1", value.getEvent_name());
+          intent.putExtra("arg2", value.getEvent_host());
+          intent.putExtra("sort", "name");
+          startActivity(intent);		        	
 				}
 			});
 			
