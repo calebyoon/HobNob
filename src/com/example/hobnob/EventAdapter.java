@@ -43,23 +43,15 @@ public class EventAdapter extends ArrayAdapter<Event>
     if (v == null) {
       LayoutInflater vi = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
       v = vi.inflate(R.layout.event_list_item, null);
-  }
+    }
     if (e != null) {
       eventText_t = (TextView) v.findViewById(R.id.eventListText);
       TextView eventDistance_t = (TextView) v.findViewById(R.id.eventListDistance);
       ImageView eventImage_i = (ImageView) v.findViewById(R.id.eventListImage);
       
-      ParseQuery<ParseUser> query = ParseUser.getQuery();
-      
-      query.getInBackground(e.getEvent_host(), new GetCallback<ParseUser>(){
-		@Override
-		public void done(ParseUser object, ParseException ex) {
-			hostname = object.getString("name");
-		    if (eventText_t != null) {
-		      eventText_t.setText(e.getEvent_name() + "\nBy: " + hostname);                            
-		    }
-		}
-      }); 
+      if (eventText_t != null) {
+	      eventText_t.setText(e.getEvent_name() + "\nBy: " + e.getEvent_host_name());                            
+	    }
       if(eventDistance_t != null) {
         LatLng coords = e.getEvent_coords();
         float [] results = new float[3];

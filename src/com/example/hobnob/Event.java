@@ -14,17 +14,19 @@ class Event {
 	    private String event_date;
 	    private String event_type;
 	    private String event_host;
+	    private String event_host_name;
 	    private LatLng coords;
 
 	    private Event() { }
 
-	    public Event(String eventID, String event_name, String event_time, String event_date, String event_type, String event_host, LatLng coords) {
+	    public Event(String eventID, String event_name, String event_time, String event_date, String event_type, String event_host, String event_host_name, LatLng coords) {
 	        this.event_name = event_name;
 	        this.eventID = eventID;
 	        this.event_time = event_time;
 	        this.event_date = event_date;
 	        this.event_type = event_type;
 	        this.event_host = event_host;
+	        this.event_host_name = event_host_name;
 	        this.coords = coords;
 	    }
 
@@ -56,4 +58,8 @@ class Event {
 	  public LatLng getEvent_coords() {
       return coords;
     }
+	  
+	  public String getEvent_host_name() {
+		  return event_host_name;
+	  }
 	}

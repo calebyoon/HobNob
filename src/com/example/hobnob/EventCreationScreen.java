@@ -6,7 +6,10 @@ import java.util.concurrent.ExecutionException;
 
 import com.firebase.client.Firebase;
 import com.google.android.gms.maps.model.LatLng;
+import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import android.os.Bundle;
@@ -35,7 +38,9 @@ public class EventCreationScreen extends Activity
   private EditText eventCity_t;
   private EditText eventState_t;
   private EditText eventDescription_t;
-  
+  private String address;
+  private ParseObject event;
+  private LatLng coords;
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -61,32 +66,42 @@ public class EventCreationScreen extends Activity
     	if(eventName_t.getText().toString().equals("") || eventTime_t.getText().toString().equals("") || eventDate_t.getText().toString().equals("") || eventAddress_t.getText().toString().equals("") || eventCity_t.getText().toString().equals("") || eventState_t.getText().toString().equals("")) {
         	Toast.makeText(getApplicationContext(), "One of the fields was not filled out", Toast.LENGTH_LONG).show();
     	} else {
-    		ParseObject event = new ParseObject("Event");
+    		event = new ParseObject("Event");
     		event.put("name", eventName_t.getText().toString());
     		event.put("type", eventType_s.getSelectedItem().toString());
-    		String address = eventAddress_t.getText().toString() + " " + eventCity_t.getText().toString() + " " + eventState_t.getText().toString();
+    		address = eventAddress_t.getText().toString() + " " + eventCity_t.getText().toString() + " " + eventState_t.getText().toString();
     		event.put("location", address);
     		event.put("host", ParseUser.getCurrentUser().getObjectId());
     		event.put("date", eventDate_t.getText().toString());
     		event.put("time", eventTime_t.getText().toString());
     		event.put("description", eventDescription_t.getText().toString());
-    		LatLng coords = new LatLng(Float.NaN, Float.NaN);
-    		try
-        {
-          coords = new MapMarkerLoader().execute(address).get();
-        }
-        catch( InterruptedException e )
-        {
-          e.printStackTrace();
-        }
-        catch( ExecutionException e )
-        {
-          e.printStackTrace();
-        }
-    		event.put("lat", coords.latitude);
-    		event.put("lng", coords.longitude);
-    		event.saveInBackground();
-    		finish();
+    		coords = new LatLng(Float.NaN, Float.NaN);
+    		ParseQuery<ParseUser> query = ParseUser.getQuery();
+    	    query.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>(){
+    			@Override
+    			public void done(ParseUser user, ParseException ex) {
+    	    		event.put("hostName", user.getString("name"));
+    	    		try
+    	            {
+    	              coords = new MapMarkerLoader().execute(address).get();
+    	            }
+    	            catch( InterruptedException e )
+    	            {
+    	              e.printStackTrace();
+    	            }
+    	            catch( ExecutionException e )
+    	            {
+    	              e.printStackTrace();
+    	            }
+    	        		event.put("lat", coords.latitude);
+    	        		event.put("lng", coords.longitude);
+    	        		event.saveInBackground();
+    	        		finish();
+    	        	
+    			}
+    			
+    	      }); 
+    		
     	}
       }
     });

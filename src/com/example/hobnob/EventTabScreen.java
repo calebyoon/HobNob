@@ -37,7 +37,7 @@ public class EventTabScreen extends FragmentActivity implements ActionBar.TabLis
 		setContentView(R.layout.activity_event_tab_screen);
 	    Parse.initialize(this, "mI01KcelEuBnGZo5QdZeuCyEwODIVMjJkREDvraJ", "I91qxlmi6W7scygd1IQudVimpLdMBszZZkvpnzFW"); 
 
-	    Log.i("hello", ParseUser.getCurrentUser().get("name").toString());
+	    //Log.i("hello", ParseUser.getCurrentUser().get("name").toString());
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
 		mViewPager.setOnPageChangeListener(this);
