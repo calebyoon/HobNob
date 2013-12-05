@@ -8,14 +8,17 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.ValueEventListener;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -55,6 +58,7 @@ public class EventScreen extends Activity
   private String time;
   private String event_ID;
   private boolean attend;
+  private String hostname;
 
 
   private void switchButtons(boolean showAttend) {
@@ -117,15 +121,6 @@ public class EventScreen extends Activity
     query.whereEqualTo("name", arg1);
     query.whereEqualTo("host", arg2);
     
-    //OLD VERSION
-    /*final Firebase eventRoot = new Firebase("https://hobnob.firebaseio.com/events/");
-    final Firebase userRoot = new Firebase("https://hobnob.firebaseio.com/users/");
-    final Firebase userRef = userRoot.child(userID);
-    final Firebase eventRef = eventRoot.child(eventID);
-    
-    final Firebase listRef = new Firebase("https://hobnob.firebaseio.com/users/" + userID + "/event_list");*/
-    
- 
     
     query.findInBackground(new FindCallback<ParseObject>() {
     	  public void done(List<ParseObject> eventList, ParseException e) {
@@ -142,13 +137,20 @@ public class EventScreen extends Activity
 
     	      eventName_t.setText(events.getString("name"));
     		  eventType_t.setText(events.getString("type"));
-    		  //host = events.getString("host");
-    		  eventHost_t.setText(events.getString("host"));
+    		  ParseQuery<ParseUser> query3 = ParseUser.getQuery();;
+    	      query3.getInBackground(events.getString("host"), new GetCallback<ParseUser>(){
+    			@Override
+    			public void done(ParseUser object, ParseException ex) {
+    				hostname = object.getString("name");
+    				Log.i("hello", "world");
+    			    eventHost_t.setText(hostname);  
+    			}
+    	      });
 
     	      //String location = events.getString("location");
     		  eventDate_t.setText(events.getString("date"));
     		  eventTime_t.setText(events.getString("time"));
-          my_address = events.getString("location");
+    		  my_address = events.getString("location");
     		  eventAddress_t.setText(my_address);
     		  event_ID = events.getObjectId();
     		  
@@ -175,72 +177,6 @@ public class EventScreen extends Activity
     eventHost_t.setText(host);
     
    Toast.makeText(getApplicationContext(), event_ID, Toast.LENGTH_LONG).show();
-
-   
-
-    
-    
-    //OLD VERSION
-    /*listRef.addChildEventListener(new ChildEventListener() {
-      
-      @Override
-      public void onChildRemoved(DataSnapshot arg0) {
-        // TODO Auto-generated method stub
-        
-      }
-      
-      @Override
-      public void onChildMoved(DataSnapshot arg0, String arg1) {
-        // TODO Auto-generated method stub
-        
-      }
-      
-      @Override
-      public void onChildChanged(DataSnapshot snapshot, String arg1) {
-        // TODO Auto-generated method stub
-        
-      }
-      
-      @Override
-      public void onChildAdded(final DataSnapshot snapshot, String arg1) {
-        // TODO Auto-generated method stub
-        final String curEventID = snapshot.getValue(String.class);
-        if(curEventID.equals(eventID)) {
-          eventListID = snapshot.getName();
-          switchButtons(false);
-        }
-      }
-      
-      @Override
-      public void onCancelled() {
-        // TODO Auto-generated method stub
-        
-      }
-    });
-    
-    eventRef.addValueEventListener(new ValueEventListener() {
-      @Override
-      public void onDataChange(DataSnapshot snapshot) {
-          Object value = snapshot.getValue();
-          if (value == null) {
-          } else {
-              eventName_t.setText((String)((Map)value).get("event_name"));
-              eventHost_t.setText("Host: " + (String)((Map)value).get("event_host"));
-              eventType_t.setText("Type: " + (String)((Map)value).get("event_type"));
-              eventDate_t.setText("Date: " + (String)((Map)value).get("event_date"));
-              eventTime_t.setText("Time: " + (String)((Map)value).get("event_time"));
-              eventAddress_t.setText((String)((Map)value).get("event_address"));
-              eventCityState_t.setText( (String)((Map)value).get("event_city") + ", " + (String)((Map)value).get("event_state") );
-              eventDescription_t.setText((String)((Map)value).get("event_description"));
-          }
-      }
-
-      @Override
-      public void onCancelled()
-      {
-        // TODO Auto-generated method stub
-        
-      }});*/
     
     attendEvent_b.setOnClickListener(new OnClickListener() {
 

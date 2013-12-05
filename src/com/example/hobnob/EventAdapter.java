@@ -38,7 +38,7 @@ public class EventAdapter extends ArrayAdapter<Event>
     LocationManager locationManager =  (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
     Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
     if(location == null){
-    	locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+    	location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
     }
     if (v == null) {
       LayoutInflater vi = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);

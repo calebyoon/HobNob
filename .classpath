@@ -8,5 +8,13 @@
 	<classpathentry kind="lib" path="libs/firebase-client-jvm-LATEST.jar"/>
 	<classpathentry kind="lib" path="libs/firebase-simple-login-LATEST.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/google-play-services_lib"/>
+<<<<<<< HEAD
+=======
+	<classpathentry kind="lib" path="/android-support-v7-appcompat/libs/android-support-v7-appcompat.jar"/>
+	<classpathentry kind="lib" path="/android-support-v7-appcompat/libs/android-support-v4.jar"/>
+	<classpathentry kind="lib" path="/FacebookSDK/bin/facebooksdk.jar"/>
+	<classpathentry kind="lib" path="/google-play-services_lib/bin/google-play-services_lib.jar"/>
+	<classpathentry kind="lib" path="libs/Parse-1.3.8.jar"/>
+>>>>>>> f6d7bd466239f19310b1e605c94a83de445bc7d2
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
