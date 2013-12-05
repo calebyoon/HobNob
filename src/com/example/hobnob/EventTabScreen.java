@@ -85,7 +85,9 @@ public class EventTabScreen extends FragmentActivity implements ActionBar.TabLis
 	        	if (ParseFacebookUtils.getSession() != null)
 	        		ParseFacebookUtils.getSession().closeAndClearTokenInformation();
 	        	ParseUser.logOut();
-	        	finish();
+	        	Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
+				finish();
+		        startActivity(intent2);
 	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
@@ -102,6 +104,12 @@ public class EventTabScreen extends FragmentActivity implements ActionBar.TabLis
 		getActionBar().setSelectedNavigationItem(position);
 	}
 	
+	@Override
+	public void onBackPressed()
+	{
+	   moveTaskToBack(true);
+
+	}
 	private class MyPagerAdapter extends FragmentStatePagerAdapter {
 
 		public MyPagerAdapter(FragmentManager fm) {

@@ -146,6 +146,7 @@ public class MainActivity extends Activity {
 
 			private void startIntent() {
 				Intent intent = new Intent(getApplicationContext(), EventTabScreen.class);
+				finish();
 		        startActivity(intent);
 			}
 		});

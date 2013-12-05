@@ -6,6 +6,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import android.content.Context;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ public class EventAdapter extends ArrayAdapter<Event>
 {
 
   private ArrayList<Event> items;
+  private LocationListener ll = null;
   
   public EventAdapter(Context context, int textViewResourceId, ArrayList<Event> items) {
     super(context, textViewResourceId, items);
@@ -31,6 +33,9 @@ public class EventAdapter extends ArrayAdapter<Event>
     Event e = items.get(position);
     LocationManager locationManager =  (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
     Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+    if(location == null){
+    	locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+    }
     if (v == null) {
       LayoutInflater vi = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
       v = vi.inflate(R.layout.event_list_item, null);
