@@ -85,6 +85,10 @@
             android:name="com.example.hobnob.EventsAttending"
             android:label="@string/title_activity_events_attending" >
         </activity>
+        <activity
+            android:name="com.example.hobnob.GuestsAttending"
+            android:label="@string/title_activity_guests_attending" >
+        </activity>
 	<activity
             android:name="com.example.hobnob.EventTabScreen"
             android:label="@string/title_activity_event_tab_screen" >
