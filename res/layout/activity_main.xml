@@ -9,51 +9,25 @@
     tools:context=".MainActivity" >
 
     <ImageView
+        android:id="@+id/imageView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/passwordText"
         android:layout_centerHorizontal="true"
         android:scaleType="centerCrop"
         android:src="@drawable/iconback" />
 
     <Button
-        android:id="@+id/createButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="Create" />
-
-    <Button
         android:id="@+id/loginButton"
-        android:layout_width="wrap_content"
+        android:layout_width="225dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:text="@string/Login" />
-
-    <EditText
-        android:id="@+id/passwordText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/createButton"
+        android:layout_alignBottom="@+id/imageView1"
+        android:background="@drawable/login_button"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="46dp"
-        android:ems="10"
-        android:inputType="textPassword" 
-        android:hint="Password"/>
-
-    <EditText
-        android:id="@+id/usernameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/passwordText"
-        android:layout_alignLeft="@+id/passwordText"
-        android:layout_marginBottom="28dp"
-        android:ems="10" 
-        android:hint="Email Address">
-
-        <requestFocus />
-    </EditText>
+        android:layout_marginBottom="26dp"
+        android:textStyle="bold"
+        android:layout_marginTop="100dp"
+        android:textColor="#fff"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/login" />
 
 </RelativeLayout>

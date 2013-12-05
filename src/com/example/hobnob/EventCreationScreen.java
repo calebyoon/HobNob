@@ -7,10 +7,12 @@ import java.util.concurrent.ExecutionException;
 import com.firebase.client.Firebase;
 import com.google.android.gms.maps.model.LatLng;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;

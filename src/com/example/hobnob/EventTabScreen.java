@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.*;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,8 +22,10 @@ import android.widget.Toast;
 
 import com.parse.Parse;
 import com.parse.ParseAnalytics;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class EventTabScreen extends FragmentActivity implements ActionBar.TabListener, ViewPager.OnPageChangeListener {
 
@@ -33,7 +36,8 @@ public class EventTabScreen extends FragmentActivity implements ActionBar.TabLis
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_tab_screen);
 	    Parse.initialize(this, "mI01KcelEuBnGZo5QdZeuCyEwODIVMjJkREDvraJ", "I91qxlmi6W7scygd1IQudVimpLdMBszZZkvpnzFW"); 
-		
+
+	    Log.i("hello", ParseUser.getCurrentUser().get("name").toString());
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
 		mViewPager.setOnPageChangeListener(this);
@@ -78,7 +82,10 @@ public class EventTabScreen extends FragmentActivity implements ActionBar.TabLis
 	        	Toast.makeText(getApplicationContext(), "Settings pressed", Toast.LENGTH_LONG).show();
 	        	return true;
 	        case R.id.action_logout:
-	        	Toast.makeText(getApplicationContext(), "Log out pressed", Toast.LENGTH_LONG).show();
+	        	if (ParseFacebookUtils.getSession() != null)
+	        		ParseFacebookUtils.getSession().closeAndClearTokenInformation();
+	        	ParseUser.logOut();
+	        	finish();
 	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);

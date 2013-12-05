@@ -23,11 +23,15 @@
         android:allowBackup="true"
         android:icon="@drawable/icon3"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:name=".MainApplication" >
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
+		<activity
+		    android:name="com.facebook.LoginActivity"
+		    android:label="@string/login" >
+		</activity>
         <activity
             android:name="com.example.hobnob.MainActivity"
             android:label="@string/app_name" >
@@ -92,11 +96,6 @@
 	<activity
             android:name="com.example.hobnob.EventTabScreen"
             android:label="@string/title_activity_event_tab_screen" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>	
         <activity
             android:name="com.example.hobnob.MapScreen"

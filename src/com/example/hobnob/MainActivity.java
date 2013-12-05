@@ -1,32 +1,36 @@
 package com.example.hobnob;
 
-import com.example.hobnob.R;
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.ValueEventListener;
-import com.firebase.simplelogin.SimpleLogin;
-import com.firebase.simplelogin.SimpleLoginAuthenticatedHandler;
-import com.firebase.simplelogin.User;
+import java.util.Arrays;
+import java.util.List;
 
-import android.os.Bundle;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
+
+import com.facebook.FacebookRequestError;
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.model.GraphUser;
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
+import com.parse.ParseUser;
 
 public class MainActivity extends Activity {
 	
-	public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-
+	private Dialog progressDialog;
 	private Button login_b;
-	private Button check_b;
-	private Button create_b;
-	private EditText username_t;
-	private EditText password_t;
 	
 	
 	@Override
@@ -34,112 +38,75 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		final Firebase ref = new Firebase("https://hobnob.firebaseio.com");
-
 		//check_b = (Button)findViewById(R.id.checkButton);
 		login_b = (Button)findViewById(R.id.loginButton);
-		create_b = (Button)findViewById(R.id.createButton);
-		username_t = (EditText)findViewById(R.id.usernameText);
-		password_t = (EditText)findViewById(R.id.passwordText);
-		
-		/*check_b.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				
-				//Firebase fire = new Firebase("https://hobnob.firebaseio.com/");
-				SimpleLogin authClient = new SimpleLogin(ref);
-				
-				authClient.checkAuthStatus(new SimpleLoginAuthenticatedHandler() {
-
-					@Override
-					public void authenticated(
-							com.firebase.simplelogin.enums.Error error, User user) {
-
-						if (error != null) {
-						      // Oh no! There was an error performing the check
-							System.out.println("error authenticating");
-							System.out.println(error.toString());
-						
-						} else if (user == null) {
-						      // No user is logged in
-							System.out.println("no user logged in");
-						} else {
-						      // There is a logged in user
-							System.out.println("user logged in");
-						}
-					}
-					});
-				
-			}
-		});*/
-		
 		login_b.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
-				//Firebase fire = new Firebase("https://hobnob.firebaseio.com/");
-				SimpleLogin auth = new SimpleLogin(ref);
-				
-				auth.loginWithEmail(username_t.getText().toString(), password_t.getText().toString(), new SimpleLoginAuthenticatedHandler() {
-					
-					@Override
-					public void authenticated(
-							com.firebase.simplelogin.enums.Error error, User user) {
-						// TODO Auto-generated method stub
-						if(error != null) {
-							System.out.println(error.toString());
-							System.out.println("login error");
-					      // There was an error logging into this account
-					    }
-					    else {
-							System.out.println("user logged int successfully");
-							System.out.println(user.getUserId());
-							Intent intent = new Intent(getApplicationContext(), EventTabScreen.class);
-						    intent.putExtra("ID", user.getUserId());
-						    startActivity(intent);
-					      // We are now logged in
-					    }
-					}
-					});
-				
+				onLoginButtonClicked();
 			}
 		});
 		
-		create_b.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-
-				//Firebase fire = new Firebase("https://hobnob.firebaseio.com/");
-				SimpleLogin authClient2 = new SimpleLogin(ref);
-				System.out.println(username_t.toString());
-				authClient2.createUser(username_t.getText().toString(), password_t.getText().toString(), new SimpleLoginAuthenticatedHandler() {
-
-					@Override
-					public void authenticated(
-							com.firebase.simplelogin.enums.Error error, User user) {
-						// TODO Auto-generated method stub
-					    if(error != null) {
-						      // There was an error creating this account
-							System.out.println("user not created");
-							System.out.println(error.toString());
-
-						    }
-						else {
-						      // We are now logged in
-							System.out.println("user created");
-							Intent createUserIntent = new Intent(getApplicationContext(), CreateAccountDetails.class);
-							createUserIntent.putExtra("ID", user.getUserId());
-						    startActivity(createUserIntent);
-						}
-					}
-					});
-				
-			}
-		});
+		Session session = ParseFacebookUtils.getSession();
+	    if (session != null && session.isOpened()) {
+	        makeMeRequest();
+	    }
 		
-		
-		
+		ParseUser currentUser = ParseUser.getCurrentUser();
+		if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
+			// Go to the user info activity
+			Log.i("linked", "is linked " + currentUser.getUsername());
+		}
+	}
+
+	private void makeMeRequest() {
+		Request request = Request.newMeRequest(ParseFacebookUtils.getSession(),
+        new Request.GraphUserCallback() {
+            @Override
+            public void onCompleted(GraphUser user, Response response) {
+                // handle response
+            	if (user != null) { 
+                // Create a JSON object to hold the profile info
+                JSONObject userProfile = new JSONObject();
+                try {                   
+                    // Populate the JSON object 
+                    userProfile.put("facebookId", user.getId());
+                    userProfile.put("name", user.getName());
+                    Log.i("userfromfb", userProfile.get("name").toString());
+                    Log.i("parseuserName", "name " + ParseUser.getCurrentUser().getUsername());
+                    ParseUser.getCurrentUser().put("name", user.getName());
+                    ParseUser.getCurrentUser().saveInBackground();
+                    Log.i("thename", ParseUser.getCurrentUser().get("name").toString());
+                    
+                    if (user.getLocation().getProperty("name") != null) {
+                        userProfile.put("location", (String) user
+                                .getLocation().getProperty("name")); 
+                    }                           
+                        
+                } catch (JSONException e) {
+                    Log.d("JSON",
+                            "Error parsing returned user data.");
+                }
+
+            } else if (response.getError() != null) {
+                // handle error
+            	 if ((response.getError().getCategory() == 
+                         FacebookRequestError.Category.AUTHENTICATION_RETRY) || 
+                         (response.getError().getCategory() == 
+                         FacebookRequestError.Category.AUTHENTICATION_REOPEN_SESSION)) 
+                     {
+                         Log.d("error",
+                                 "The facebook session was invalidated.");
+                     } else {
+                         Log.d("error",
+                                 "Some other error: "
+                                         + response.getError()
+                                                 .getErrorMessage());
+                     }
+            	}         
+            }
+        });
+	    request.executeAsync();
 	}
 
 	@Override
@@ -148,5 +115,39 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		ParseFacebookUtils.finishAuthentication(requestCode, resultCode, data);
+	}
 
+	private void onLoginButtonClicked() {
+		MainActivity.this.progressDialog = ProgressDialog.show(
+				MainActivity.this, "", "Logging in...", true);
+		List<String> permissions = Arrays.asList("basic_info", "user_about_me",
+				"user_relationships", "user_birthday", "user_location");
+		ParseFacebookUtils.logIn(permissions, this, new LogInCallback() {
+			@Override
+			public void done(ParseUser user, ParseException err) {
+				MainActivity.this.progressDialog.dismiss();
+				if (user == null) {
+					Log.d("usernull",
+							"Uh oh. The user cancelled the Facebook login.");
+				} else if (user.isNew()) {
+					Log.d("usernew",
+							"User signed up and logged in through Facebook!");
+					startIntent();
+				} else {
+					Log.d("loggedin",
+							"User logged in through Facebook!");
+					startIntent();
+				}
+			}
+
+			private void startIntent() {
+				Intent intent = new Intent(getApplicationContext(), EventTabScreen.class);
+		        startActivity(intent);
+			}
+		});
+	}
 }
