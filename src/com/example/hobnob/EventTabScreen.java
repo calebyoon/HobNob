@@ -60,20 +60,9 @@ public class EventTabScreen extends FragmentActivity implements ActionBar.TabLis
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
 		// Handle presses on the action bar items
 	    switch (item.getItemId()) {
 	        case R.id.create_event_menu:
-	        	/*System.out.println("Touched");
-	        	ParseObject newEvent = new ParseObject("Event");
-	        	newEvent.put("name", "new event");
-	        	newEvent.put("type", "academic");
-	    		newEvent.put("location", "new place");
-	    		newEvent.put("host", "nick a");
-	    		newEvent.put("date", "11/27/13");
-	    		newEvent.put("time", "11:00");
-	    		newEvent.put("description", "NEW");
-	    		newEvent.saveInBackground();*/
 	        	Intent intent = new Intent(getApplicationContext(), EventCreationScreen.class);
 				intent.putExtra("ID", "14");
 			    startActivity(intent);

@@ -35,7 +35,6 @@ public class EventCreationScreen extends Activity
   private EditText eventCity_t;
   private EditText eventState_t;
   private EditText eventDescription_t;
-  private String	userID;
   
   
   @Override
@@ -43,10 +42,6 @@ public class EventCreationScreen extends Activity
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_event_creation_screen);
-    
-    Intent i = getIntent();
-    userID = i.getStringExtra("ID");
-    final Firebase ref = new Firebase("https://hobnob.firebaseio.com");
 
     create_b = (Button)findViewById(R.id.createEventButton);
     eventName_t = (EditText)findViewById(R.id.eventNameText);
@@ -62,14 +57,7 @@ public class EventCreationScreen extends Activity
       
       @Override
       public void onClick(View v) {
-        /*Firebase eventRef = new Firebase("https://hobnob.firebaseio.com/events");
-        Firebase newRef = eventRef.push();
-        newRef.setValue(new Event(eventName_t.getText().toString(), eventTime_t.getText().toString(), eventDate_t.getText().toString(), eventType_s.getSelectedItem().toString(), userID, eventAddress_t.getText().toString(), eventCity_t.getText().toString(), eventState_t.getText().toString(), eventDescription_t.getText().toString(), new HashMap<String, String>()));
-        Intent intent = new Intent(getApplicationContext(), UserScreen.class);
-        intent.putExtra("ID", userID);
-        startActivity(intent);*/
-      	//Toast.makeText(getApplicationContext(), "Didn't insert", Toast.LENGTH_LONG).show();
-
+    	  
     	if(eventName_t.getText().toString().equals("") || eventTime_t.getText().toString().equals("") || eventDate_t.getText().toString().equals("") || eventAddress_t.getText().toString().equals("") || eventCity_t.getText().toString().equals("") || eventState_t.getText().toString().equals("")) {
         	Toast.makeText(getApplicationContext(), "One of the fields was not filled out", Toast.LENGTH_LONG).show();
     	} else {
@@ -78,7 +66,7 @@ public class EventCreationScreen extends Activity
     		event.put("type", eventType_s.getSelectedItem().toString());
     		String address = eventAddress_t.getText().toString() + " " + eventCity_t.getText().toString() + " " + eventState_t.getText().toString();
     		event.put("location", address);
-    		event.put("host", "TEST MAN");
+    		event.put("host", ParseUser.getCurrentUser().getObjectId());
     		event.put("date", eventDate_t.getText().toString());
     		event.put("time", eventTime_t.getText().toString());
     		event.put("description", eventDescription_t.getText().toString());
