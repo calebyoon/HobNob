@@ -8,7 +8,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 class Event {
 
-      private String eventID;
+      	private String eventID;
 	    private String event_name;
 	    private String event_time;
 	    private String event_date;

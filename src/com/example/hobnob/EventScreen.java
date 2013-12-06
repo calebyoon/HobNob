@@ -7,6 +7,7 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.ValueEventListener;
+import com.google.android.gms.maps.model.LatLng;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.Parse;
@@ -59,6 +60,7 @@ public class EventScreen extends Activity
   private String event_ID;
   private boolean attend;
   private String hostname;
+  private String realEventID;
 
 
   private void switchButtons(boolean showAttend) {
@@ -99,98 +101,61 @@ public class EventScreen extends Activity
 
     guestsAttending_b = (Button) findViewById(R.id.guestsAttending_b);
     
+    //initially set to invisible before we query to tell which buttons to display
     attendEvent_b.setVisibility(View.GONE);
     unattendEvent_b.setVisibility(View.GONE);
     guestsAttending_b.setVisibility(View.GONE);
 
     
     Intent i = getIntent();
-    //OLD VERSION
-    /*eventID = i.getStringExtra("eventID");
-    userID = i.getStringExtra("userID");
-    type = i.getStringExtra("type");*/
-    ///new intent extra
     type = "local";
-    arg1 = i.getStringExtra("arg1");
-    arg2 = i.getStringExtra("arg2");
-    System.out.println("!" + arg1 + "!");
-    System.out.println("!" + arg2 + "!");
+    realEventID = i.getStringExtra("eventID");
     attend = true;
     
     ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
-    query.whereEqualTo("name", arg1);
-    query.whereEqualTo("host", arg2);
+	query.getInBackground(realEventID, new GetCallback<ParseObject>() {
+	  public void done(ParseObject event, ParseException e) {
+	    if (e == null) {
+	    	eventName_t.setText(event.getString("name"));
+  		  	eventType_t.setText(event.getString("type"));
+  		  	eventHost_t.setText(ParseUser.getCurrentUser().getString("name"));
+  		  	eventDate_t.setText(event.getString("date"));
+  		  	eventAddress_t.setText(event.getString("address"));
+  		  	eventCityState_t.setText(event.getString("city") + ", " + event.getString("state"));
+  		  	
+  		  	ParseQuery<ParseObject> isAttendingQuery = ParseQuery.getQuery("Attendees");
+  		  	isAttendingQuery.whereEqualTo("eventID", realEventID);
+  		  	isAttendingQuery.whereEqualTo("AttendeeID", ParseUser.getCurrentUser().getObjectId()); //use user id here later
+		  
+  		  	isAttendingQuery.findInBackground(new FindCallback<ParseObject>() {
+		 	  public void done(List<ParseObject> attendeeList, ParseException e) {
+		 	    for (ParseObject attendee : attendeeList) {
+		 	    	attend = false;
+		 	    }
+		 	    switchButtons(attend);
+		 	   guestsAttending_b.setVisibility(View.VISIBLE);
+		 	   //sets guest attending visible after the attend/unattend button is set visible
+		 	  }
+		 	});
+	    
+	    } else {
+	      // something went wrong
+	    }
+	  }
+	});
     
     
-    query.findInBackground(new FindCallback<ParseObject>() {
-    	  public void done(List<ParseObject> eventList, ParseException e) {
-    	    // commentList now contains the last ten comments, and the "post"
-    	    // field has been populated. For example:
-    		  System.out.println("in function");
-    	    for (ParseObject events : eventList) {
-      		  System.out.println("in event");
-
-    	      // This does not require a network access.
-	          Toast.makeText(getApplicationContext(),events.getString("host"), Toast.LENGTH_LONG).show();
-
-	          System.out.println("host " + events.getString("host"));
-
-    	      eventName_t.setText(events.getString("name"));
-    		  eventType_t.setText(events.getString("type"));
-    		  ParseQuery<ParseUser> query3 = ParseUser.getQuery();;
-    	      query3.getInBackground(events.getString("host"), new GetCallback<ParseUser>(){
-    			@Override
-    			public void done(ParseUser object, ParseException ex) {
-    				hostname = object.getString("name");
-    				Log.i("hello", "world");
-    			    eventHost_t.setText(hostname);  
-    			}
-    	      });
-
-    	      //String location = events.getString("location");
-    		  eventDate_t.setText(events.getString("date"));
-    		  eventTime_t.setText(events.getString("time"));
-    		  my_address = events.getString("location");
-    		  eventAddress_t.setText(my_address);
-    		  event_ID = events.getObjectId();
-    		  
-    		  ParseQuery<ParseObject> query2 = ParseQuery.getQuery("Attendees");
-    		  query2.whereEqualTo("eventID", event_ID);
-    		  query2.whereEqualTo("AttendeeID", "14"); //use user id here later
-    		  query2.findInBackground(new FindCallback<ParseObject>() {
-    		 	  public void done(List<ParseObject> attendeeList, ParseException e) {
-    		 	    for (ParseObject attendee : attendeeList) {
-    			        Toast.makeText(getApplicationContext(), "inside", Toast.LENGTH_LONG).show();
-    		 	    	attend = false;
-    		 	    }
-    		 	    switchButtons(attend);
-    		 	   guestsAttending_b.setVisibility(View.VISIBLE);
-
-    		 	  }
-    		 	});
-    	      //listAdapter.add(name + "\n" + type + "\n" + host + "\n" + location + "\n" + date + "\n" + time);
-    	    }
-    	  }
-    	});
-    System.out.println("host is " + host);
-    eventName_t.setText(name);
-    eventHost_t.setText(host);
     
-   Toast.makeText(getApplicationContext(), event_ID, Toast.LENGTH_LONG).show();
     
     attendEvent_b.setOnClickListener(new OnClickListener() {
 
       @Override
       public void onClick(View arg0)
       {
-          //eventRef.child("attendees").push().setValue(userID);
-          //userRef.child("event_list").push().setValue(eventID);
     	  ParseObject attendee = new ParseObject("Attendees");
-    	  attendee.put("eventID", event_ID);
-    	  //use user id here
-    	  attendee.put("AttendeeID", "14");
+    	  attendee.put("eventID", realEventID);
+    	  attendee.put("AttendeeID", ParseUser.getCurrentUser().getObjectId());
     	  attendee.saveInBackground();
-    	  
           finish();
       }
       
@@ -200,9 +165,8 @@ public class EventScreen extends Activity
 		
 		@Override
 		public void onClick(View v) {
-			//intent
 			Intent intent = new Intent(getApplicationContext(), GuestsAttending.class);
-            intent.putExtra("eventID", event_ID);
+            intent.putExtra("eventID", realEventID);
             startActivity(intent);
 		}
 	});
@@ -212,25 +176,17 @@ public class EventScreen extends Activity
       @Override
       public void onClick(View arg0)
       {
-        //Firebase eventListRef = listRef.child(eventListID);
-        //eventListRef.removeValue();
           ParseQuery<ParseObject> query = ParseQuery.getQuery("Attendees");
-	      query.whereEqualTo("eventID", event_ID);
-	      query.whereEqualTo("AttendeeID", "14");
+	      query.whereEqualTo("eventID", realEventID);
+	      query.whereEqualTo("AttendeeID", ParseUser.getCurrentUser().getObjectId());
 	      
 	      query.findInBackground(new FindCallback<ParseObject>() {
 	      	  public void done(List<ParseObject> attendeeList, ParseException e) {
-	      	    // commentList now contains the last ten comments, and the "post"
-	      	    // field has been populated. For example:
 	      	    for (ParseObject attendee : attendeeList) {
-	      	      // This does not require a network access.
 	      	    	attendee.deleteInBackground();
 	      	    }
 	      	  }
 	      	});
-
-
-
         finish();
       }
       
@@ -243,7 +199,7 @@ public class EventScreen extends Activity
       {
         Intent intent = new Intent(getApplicationContext(), MapScreen.class);
         intent.putExtra("ID", userID);
-        intent.putExtra("eventID", event_ID);
+        intent.putExtra("eventID", realEventID);
         startActivity(intent);
         
       }
@@ -259,5 +215,58 @@ public class EventScreen extends Activity
     //getMenuInflater().inflate(R.menu.event_screen, menu);
     return true;
   }
+  
+  
+  
+  
+  
+  //// old implementation of query. delete after checking above works
+  /*query.findInBackground(new FindCallback<ParseObject>() {
+	  public void done(List<ParseObject> eventList, ParseException e) {
+	    for (ParseObject events : eventList) {
+
+	      // This does not require a network access.
+          Toast.makeText(getApplicationContext(),events.getString("host"), Toast.LENGTH_LONG).show();
+
+          System.out.println("host " + events.getString("host"));
+
+	      eventName_t.setText(events.getString("name"));
+		  eventType_t.setText(events.getString("type"));
+		  ParseQuery<ParseUser> query3 = ParseUser.getQuery();;
+	      query3.getInBackground(events.getString("host"), new GetCallback<ParseUser>(){
+			@Override
+			public void done(ParseUser object, ParseException ex) {
+				hostname = object.getString("name");
+				Log.i("hello", "world");
+			    eventHost_t.setText(hostname);  
+			}
+	      });
+
+	      //String location = events.getString("location");
+		  eventDate_t.setText(events.getString("date"));
+		  eventTime_t.setText(events.getString("time"));
+		  my_address = events.getString("location");
+		  eventAddress_t.setText(my_address);
+		  event_ID = events.getObjectId();
+		  
+		  ParseQuery<ParseObject> query2 = ParseQuery.getQuery("Attendees");
+		  query2.whereEqualTo("eventID", event_ID);
+		  query2.whereEqualTo("AttendeeID", "14"); //use user id here later
+		  
+		  query2.findInBackground(new FindCallback<ParseObject>() {
+		 	  public void done(List<ParseObject> attendeeList, ParseException e) {
+		 	    for (ParseObject attendee : attendeeList) {
+			        Toast.makeText(getApplicationContext(), "inside", Toast.LENGTH_LONG).show();
+		 	    	attend = false;
+		 	    }
+		 	    switchButtons(attend);
+		 	   guestsAttending_b.setVisibility(View.VISIBLE);
+
+		 	  }
+		 	});
+	      //listAdapter.add(name + "\n" + type + "\n" + host + "\n" + location + "\n" + date + "\n" + time);
+	    }
+	  }
+	});*/
 
 }

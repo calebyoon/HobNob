@@ -55,9 +55,8 @@ public class EventTabFragment extends Fragment {
 	public static final int TYPE_ATTENDING = 2;
 	private static String userID = "14";
 	private ListView list;
-	private int numOfEvents;
 	private EventAdapter listAdapter;
-	private SimpleCursorAdapter adapter;
+	private boolean isHost;
 
 	public static EventTabFragment create(int type) {
 		final EventTabFragment fragment = new EventTabFragment();
@@ -82,10 +81,11 @@ public class EventTabFragment extends Fragment {
         // Create and populate an ArrayList of objects from parse
 	final FrameLayout frame = (FrameLayout) view.findViewById(R.layout.my_fragment);
     ArrayList<Event> m_event = new ArrayList<Event>();
+    isHost = false;
     listAdapter = new EventAdapter(getActivity(), R.layout.event_list_item, m_event);
     list = (ListView)view.findViewById(R.id.list_layout);
     list.setAdapter(listAdapter);
-    numOfEvents = 0;
+    
     
 	}
 	@Override
@@ -100,9 +100,10 @@ public class EventTabFragment extends Fragment {
 			switch (getArguments().getInt(KEY_TYPE)) {
 			case TYPE_LOCAL:
 		        attendQuery.whereEqualTo("AttendeeID", "naugust");
-		        attendQuery.whereNotEqualTo("host", ParseUser.getCurrentUser().getObjectId());
+		        query.whereNotEqualTo("host", ParseUser.getCurrentUser().getObjectId());
 				break;
 			case TYPE_HOSTING:
+				isHost = true;
 		        query.whereEqualTo("host", ParseUser.getCurrentUser().getObjectId());
 		        attendQuery.whereEqualTo("AttendeeID", "naugust");
 		        //should give 0 attendees
@@ -132,11 +133,11 @@ public class EventTabFragment extends Fragment {
 						    	String time = object.getString("time");
 						    	String date = object.getString("date");
 						    	String type = object.getString("type");
-			      	    String host = object.getString("host");
-		                String hostName = object.getString("hostName");
-			      	    double lat = object.getDouble("lat");
-			      	    double lng = object.getDouble("lng");
-			      	    listAdapter.add(new Event(id, name, time, date, type, host, hostName, new LatLng(lat, lng)));
+						    	String host = object.getString("host");
+						    	String hostName = object.getString("hostName");
+						    	double lat = object.getDouble("lat");
+						    	double lng = object.getDouble("lng");
+						    	listAdapter.add(new Event(id, name, time, date, type, host, hostName, new LatLng(lat, lng)));
 						    } else {
 						      // something went wrong
 						    }
@@ -171,15 +172,20 @@ public class EventTabFragment extends Fragment {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view,
 							int position, long id) {
-						//TextView txt = (TextView) parent.getChildAt(position - list.getFirstVisiblePosition()).findViewById(android.R.layout.simple_list_item_1);
-	          //String keyword = txt.getText().toString();
-	          Event value = (Event)listAdapter.getItem(position); 
-		        Intent intent = new Intent(getActivity(), EventScreen.class);
-	      
-	          intent.putExtra("arg1", value.getEvent_name());
-	          intent.putExtra("arg2", value.getEvent_host());
-	          intent.putExtra("sort", "name");
-	          startActivity(intent);		        	
+						
+						Event value = (Event)listAdapter.getItem(position); 
+						if(isHost) { 
+			            	Intent intent = new Intent(getActivity(), EventCreationScreen.class);
+			                intent.putExtra("eventID", value.getEventID());
+			                intent.putExtra("sort", "name");
+			                intent.putExtra("edit", true);
+			                startActivity(intent);
+						} else {
+							Intent intent = new Intent(getActivity(), EventScreen.class);
+							intent.putExtra("eventID", value.getEventID());
+							intent.putExtra("sort", "name");
+							startActivity(intent);	
+						}
 					}
 				});
 	}

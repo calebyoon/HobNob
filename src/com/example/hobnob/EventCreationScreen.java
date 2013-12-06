@@ -1,11 +1,13 @@
 package com.example.hobnob;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import com.firebase.client.Firebase;
 import com.google.android.gms.maps.model.LatLng;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -38,9 +40,11 @@ public class EventCreationScreen extends Activity
   private EditText eventCity_t;
   private EditText eventState_t;
   private EditText eventDescription_t;
+  private String realEventID;
   private String address;
   private ParseObject event;
   private LatLng coords;
+  private boolean isEditing;
   
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -58,6 +62,38 @@ public class EventCreationScreen extends Activity
     eventState_t = (EditText)findViewById(R.id.eventStateText);
     eventDescription_t = (EditText)findViewById(R.id.EventDescriptionText);
     
+    Intent i = getIntent();
+    realEventID = i.getStringExtra("eventID");
+    isEditing = i.getBooleanExtra("edit", false);
+    
+    if(isEditing) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
+        query.getInBackground(realEventID, new GetCallback<ParseObject>() {
+      	  public void done(ParseObject event, ParseException e) {
+      	    if (e == null) {
+      	    	if(event.getString("type").equals("Academic")) {
+        	        eventType_s.setSelection(1);
+    	    	} else if (event.getString("type").equals("Social")) {
+        	        eventType_s.setSelection(0);
+    	    	} else {
+        	        eventType_s.setSelection(2);
+    	    	}
+    	    		
+    	    	eventName_t.setText(event.getString("name"));
+    	        eventTime_t.setText(event.getString("time"));
+    	        eventDate_t.setText(event.getString("date"));
+    	        eventAddress_t.setText(event.getString("address"));
+    	        eventCity_t.setText(event.getString("city"));
+    	        eventState_t.setText(event.getString("state"));
+    	        eventDescription_t.setText(event.getString("description"));
+      	    } else {
+      	      // something went wrong
+      	    }
+      	  }
+      	});
+    }
+        
+    
     create_b.setOnClickListener(new OnClickListener() {
       
       @Override
@@ -65,43 +101,74 @@ public class EventCreationScreen extends Activity
     	  
     	if(eventName_t.getText().toString().equals("") || eventTime_t.getText().toString().equals("") || eventDate_t.getText().toString().equals("") || eventAddress_t.getText().toString().equals("") || eventCity_t.getText().toString().equals("") || eventState_t.getText().toString().equals("")) {
         	Toast.makeText(getApplicationContext(), "One of the fields was not filled out", Toast.LENGTH_LONG).show();
-    	} else {
-    		event = new ParseObject("Event");
-    		event.put("name", eventName_t.getText().toString());
-    		event.put("type", eventType_s.getSelectedItem().toString());
-    		address = eventAddress_t.getText().toString() + " " + eventCity_t.getText().toString() + " " + eventState_t.getText().toString();
-    		event.put("location", address);
-    		event.put("host", ParseUser.getCurrentUser().getObjectId());
-    		event.put("date", eventDate_t.getText().toString());
-    		event.put("time", eventTime_t.getText().toString());
-    		event.put("description", eventDescription_t.getText().toString());
-    		coords = new LatLng(Float.NaN, Float.NaN);
-    		ParseQuery<ParseUser> query = ParseUser.getQuery();
-    	    query.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseUser>(){
-    			@Override
-    			public void done(ParseUser user, ParseException ex) {
-    	    		event.put("hostName", user.getString("name"));
-    	    		try
-    	            {
-    	              coords = new MapMarkerLoader().execute(address).get();
-    	            }
-    	            catch( InterruptedException e )
-    	            {
-    	              e.printStackTrace();
-    	            }
-    	            catch( ExecutionException e )
-    	            {
-    	              e.printStackTrace();
-    	            }
-    	        		event.put("lat", coords.latitude);
-    	        		event.put("lng", coords.longitude);
-    	        		event.saveInBackground();
-    	        		finish();
-    	        	
-    			}
+    	} 
+    	else {
+    		if(isEditing) {
     			
-    	      }); 
-    		
+    			ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
+    	        query.getInBackground(realEventID, new GetCallback<ParseObject>() {
+    	      	  public void done(ParseObject event, ParseException e) {
+    	      	    if (e == null) {
+    	      	    	event.put("name", eventName_t.getText().toString());
+   		        		event.put("type", eventType_s.getSelectedItem().toString());
+   		        		event.put("address", eventAddress_t.getText().toString());
+   		        		event.put("city", eventCity_t.getText().toString());
+   		        		event.put("state", eventState_t.getText().toString());
+   		        		event.put("host", "TEST MAN");
+   		        		event.put("date", eventDate_t.getText().toString());
+   		        		event.put("time", eventTime_t.getText().toString());
+   			    		event.put("hostName", ParseUser.getCurrentUser().getString("name"));
+   		        		event.put("description", eventDescription_t.getText().toString());
+   		        		LatLng coords = new LatLng(Float.NaN, Float.NaN);
+   		        		try
+       		            {
+       		              coords = new MapMarkerLoader().execute(eventAddress_t.getText().toString() + " " + eventCity_t.getText().toString() + " " + eventState_t.getText().toString()).get();
+       		            }
+       		            catch( Exception e1 )
+       		            {
+       		              e1.printStackTrace();
+       		            }
+       		        		event.put("lat", coords.latitude);
+       		        		event.put("lng", coords.longitude);
+       		        		event.saveInBackground();
+       		        		finish();
+    	      	    } else {
+    	      	      // something went wrong
+    	      	    }
+    	      	  }
+    	      	});
+    		} else {
+	    		event = new ParseObject("Event");
+	    		event.put("name", eventName_t.getText().toString());
+	    		event.put("type", eventType_s.getSelectedItem().toString());
+	    		event.put("address", eventAddress_t.getText().toString());
+	        	event.put("city", eventCity_t.getText().toString());
+	        	event.put("state", eventState_t.getText().toString());
+	    		event.put("host", ParseUser.getCurrentUser().getObjectId());
+	    		event.put("date", eventDate_t.getText().toString());
+	    		event.put("time", eventTime_t.getText().toString());
+	    		event.put("description", eventDescription_t.getText().toString());
+	    		event.put("hostName", ParseUser.getCurrentUser().getString("name"));
+	    		coords = new LatLng(Float.NaN, Float.NaN);
+	    		try
+	            {
+   		           coords = new MapMarkerLoader().execute(eventAddress_t.getText().toString() + " " + eventCity_t.getText().toString() + " " + eventState_t.getText().toString()).get();
+	            }
+	            catch( InterruptedException e )
+	            {
+	              e.printStackTrace();
+	            }
+	            catch( ExecutionException e )
+	            {
+	              e.printStackTrace();
+	            }
+	        		event.put("lat", coords.latitude);
+	        		event.put("lng", coords.longitude);
+	        		event.saveInBackground();
+	        		finish();
+	        	
+			}
+	    			
     	}
       }
     });
